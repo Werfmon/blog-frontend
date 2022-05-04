@@ -5,15 +5,15 @@ export default function TopWave() {
       <svg
         width="100%"
         id="svg"
-        viewBox="0 0 1440 300"
+        viewBox="0 0 1200 400"
         xmlns="http://www.w3.org/2000/svg"
         class="transition duration-300 ease-in-out delay-150"
-        style={{transform: 'rotate(180deg)', top: 0, position: 'absolute'}}
+        style={{transform: 'rotate(180deg)' , zIndex: -1}}
       >
         <defs>
           <linearGradient id="gradient" x1="53%" y1="0%" x2="47%" y2="100%">
-            <stop offset="5%" stopColor="#002bdcff"></stop>
-            <stop offset="75%" stopColor="#000000ff"></stop>
+            <stop offset="0%" stopColor="#002bdcff"></stop>
+            <stop offset="60%" stopColor="#000000ff"></stop>
           </linearGradient>
         </defs>
         <path
