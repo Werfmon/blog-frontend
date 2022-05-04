@@ -6,7 +6,7 @@ const ButtonContainer = styled.div`
   margin-left: 6rem;
 `;
 const Button = styled.button`
-  background: linear-gradient(1180deg,  #0505dbbd, #171768);
+  background: linear-gradient(100deg,  #0505dbbd, #171768);
   width: 9rem;
   height: 3rem;
   border-radius: 50px;
@@ -25,6 +25,9 @@ const Svg = styled.svg`
   transform: translate(-50%, -50%);
   margin-left: 1.3rem;
   margin-top: 1.3rem;
+  @media screen and (min-width: 600px) {
+    display: none;
+  }
   //TODO: media query, pri male sirce display: none
 `;
 

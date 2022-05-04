@@ -11,6 +11,7 @@ const Nav = styled.nav`
   align-items: center;
   position: fixed;
   top: 0;
+  z-index: 20;
 `;
 const Logo = styled.h1`
   font-family: "Kalam", cursive;
