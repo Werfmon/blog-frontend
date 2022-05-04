@@ -25,6 +25,7 @@ const Svg = styled.svg`
   transform: translate(-50%, -50%);
   margin-left: 1.3rem;
   margin-top: 1.3rem;
+  //TODO: media query, pri male sirce display: none
 `;
 
 export default function FindButton({text}) {
