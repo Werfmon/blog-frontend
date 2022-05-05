@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Avatar from "./Avatar";
+import {getToLoginPage} from '../utils/getToLoginPage'
 
 const Nav = styled.nav`
   width: 100%;
@@ -58,7 +59,7 @@ export default function NavBar() {
     <Nav>
       <Logo>ProeniX</Logo>
       <UserSection>
-        {!userLogged ? (
+        {userLogged ? (
           <>
             <WriteButton>Write</WriteButton>
             <LogoutButton>
@@ -80,7 +81,7 @@ export default function NavBar() {
             <Avatar size="30" />
           </>
         ) : (
-          <LoginButton>Login</LoginButton>
+          <LoginButton onClick={getToLoginPage}>Login</LoginButton>
         )}
       </UserSection>
     </Nav>
