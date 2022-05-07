@@ -71,30 +71,13 @@ const ButtonContainer = styled.div`
 const HeadCard = styled.div`
   padding: 20px 0 32px 20px;
 `;
-const Svg = styled.svg`
-  margin-right: 5px;
-`
 export default function login() {
   return (
     <Container>
       <Card>
       <HeadCard>
           <Title>Login</Title>
-          <BackButton action={getToMainPage}>
-            <Svg
-              width="10"
-              height="12"
-              viewBox="0 0 16 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15.4222 16.7043L3.81408 8.99985L15.4222 1.29567L14.1373 0L0.577881 8.99985L14.1373 18L15.4222 16.7043Z"
-                fill="white"
-              />
-            </Svg>
-            Back
-          </BackButton>
+          <BackButton action={getToMainPage} />
         </HeadCard>
         <Form onSubmit={() => {}}>
           <Input placeholder='E-mail' />

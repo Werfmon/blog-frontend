@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap');
 
+/*init css*/
 html,
 body {
   padding: 0;
@@ -19,12 +20,83 @@ body {
   border: none;
   outline: none;
   font-family: 'Quicksand', sans-serif;
-  /* border: 1px solid; */
 }
+/*
+  scroolbar
+  TODO: browser support like firefox
+*/
 ::-webkit-scrollbar {
   width: 10px;
   background: #000000;
 }
 ::-webkit-scrollbar-thumb {
   background-color: #1800f1;
+}
+
+/* wysiwyg toolbar */
+.icon > img {
+  -webkit-filter: grayscale(1) invert(1);
+  filter: grayscale(1) invert(1);
+  background-color: rgba(255, 0, 0, 0);
+}
+.icons > div {
+  background-color: #53535329;
+  border: none;
+  box-shadow: none !important;
+  transition: background-color .4s;
+}
+.icons > div:hover{
+  box-shadow: none !important;
+  background-color: #5353535b;
+}
+.rdw-editor-toolbar {
+  border: unset !important;
+  width: 100% !important;
+}
+/* wysiwyg main */
+.rdw-editor-wrapper{
+  padding: 0 !important;
+}
+.rdw-editor-main{
+  background-color: rgb(10, 10, 10);
+  padding-inline: 10px;
+  resize: vertical;
+  width: 100% !important;
+
+}
+/* scrollbar for wysiwyg */
+.rdw-editor-main {
+  scrollbar-width: none;
+}
+.rdw-editor-main::-webkit-scrollbar {
+  display: none;
+}
+.rdw-block-wrapper {
+  background-color: #53535329 !important;
+
+}
+.fontSize {
+  background-color: #53535329 !important;
+  border: none !important;
+  box-shadow: none !important;
+  transition: background-color .4s;
+ 
+}
+.fontSize > div, .other > div {
+  border: none;
+  box-shadow: none !important;
+  transition: background-color .4s;
+}
+.other > div {
+  border: none;
+  box-shadow: none !important;
+  transition: background-color .4s;
+  
+  -webkit-filter: grayscale(1) invert(1);
+  filter: grayscale(1) invert(1);
+  background-color: rgba(255, 0, 0, 0);
+}
+.other > div:hover{
+  box-shadow: none !important;
+  background-color: #5353535b;
 }
