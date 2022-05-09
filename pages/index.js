@@ -3,6 +3,11 @@ import styled from "styled-components";
 import HeaderSvgBlob from "../Components/HeaderSvgBlob";
 import TopArticles from "../Components/top/TopArticles";
 import ExploreMore from "../Components/ExploreMore";
+import { createContext } from "react";
+
+export const Context = createContext({
+  BACKEND: 'http://localhost:8080'
+});
 
 const Header = styled.header`
   height: 100vh;
@@ -26,7 +31,7 @@ const Span = styled.span`
 
 export default function Home() {
   return (
-    <>
+    <Context.Provider>
       <Header>
       <HeaderSvgBlob />
         <NavBar />
@@ -40,6 +45,6 @@ export default function Home() {
       </Header>
       <TopArticles />
       <ExploreMore />
-    </>
+    </Context.Provider>
   );
 }

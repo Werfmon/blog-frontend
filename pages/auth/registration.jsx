@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import styled from "styled-components";
 import BackButton from "../../Components/BackButton";
 import { getToLoginPage } from "../../utils/getToLoginPage";
 import { getToMainPage } from "../../utils/getToMainPage";
+import {Context} from '../index';
+
 const Card = styled.div`
   margin: 0 auto;
   min-width: 25rem;
@@ -85,10 +87,35 @@ const TextButton = styled.button`
 const HeadCard = styled.div`
   padding: 20px 0 32px 20px;
 `;
-const Svg = styled.svg`
-  margin-right: 5px;
-`
+
 export default function registration() {
+  const context = useContext(Context);
+  function register(e) {
+    e.preventDefault();
+
+    let data = {
+      name: e.target.name.value,
+      surname: e.target.surname.value,
+      email: e.target.email.value,
+      role: parseInt(e.target.role.value),
+      sex: e.target.sex.value,
+      password: e.target.password.value,
+      passwordAgain: e.target.passwordAgain.value,
+    }
+    console.log(data);
+    fetch(`${context.BACKEND}/auth/registration`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(res => {
+      if(res.ok) {
+        alert('Registrace byla úspěšná');
+      }
+    }).catch(err => console.error(err));
+  }
+
   return (
     <Container>
       <Card>
@@ -96,22 +123,23 @@ export default function registration() {
           <Title>Registration</Title>
           <BackButton action={getToMainPage} />
         </HeadCard>
-        <Form onSubmit={() => {}}>
-          <Input placeholder="Fist name" required />
-          <Input placeholder="last name" required />
-          <Input placeholder="E-mail" required />
-          <Select required>
-            <option>Programmer</option>
-            <option>Designer</option>
-            <option>Coder</option>
+        <Form onSubmit={register}>
+          <Input type='text' name="name" placeholder="Fist name" required />
+          <Input type='text' name="surname" placeholder="last name" required />
+          <Input type='email' name="email" placeholder="E-mail" required />
+          <Select name="role" required>
+          {/**TODO: data brany s db */}
+            <option value={1}>Programmer</option>
+            <option value={2}>Designer</option>
+            <option value={3}>Coder</option>
           </Select>
-          <Select required>
-            <option>Man</option>
-            <option>Woman</option>
-            <option>Other...</option>
+          <Select name="sex" required>
+            <option value='man'>Man</option>
+            <option value='woman'>Woman</option>
+            <option value='other'>Other...</option>
           </Select>
-          <Input placeholder="Password" required />
-          <Input placeholder="Password again" required />
+          <Input type='password' name="password" placeholder="Password" required minLength={12}/>
+          <Input type='password' name="passwordAgain" placeholder="Password again" required minLength={12}/>
           <ButtonContainer>
             <TextButton onClick={getToLoginPage}>Login</TextButton>
             <Button>Register</Button>

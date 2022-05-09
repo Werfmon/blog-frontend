@@ -8,7 +8,9 @@ import {
 } from "draft-js";
 import { convertToHTML } from "draft-convert";
 import styled from "styled-components";
-const Editor = dynamic(
+import convertFromHTMLToContentBlocks from "draft-js/lib/convertFromHTMLToContentBlocks";
+import { Editor } from "draft-js";
+const EditorWysiwyg = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
   {
     ssr: false,
@@ -82,23 +84,34 @@ export default function creator() {
     EditorState.createEmpty()
   );
 
+
+  function createArticle(e) {
+    e.preventDefault()
+    let data = {
+      title: e.target.title.value,
+      description: e.target.description.value,
+      text: convertToHTML(editorState.getCurrentContent()),
+    } 
+    //TODO
+    // fetch()
+  }
   return (
     <>
       <ArticleHeader>Article Creator</ArticleHeader>
       <Main>
-        <Form>
+        <Form onSubmit={createArticle}>
           <FormTagsContainer>
-            <Label>Article Name: </Label>
-            <Input type="text" />
+            <Label htmlFor="title">Article Name: </Label>
+            <Input type="text" name="title" />
           </FormTagsContainer>
           <FormTagsContainer>
-            <Label>Description</Label>
-            <Textarea maxLength={100}></Textarea>
+            <Label htmlFor="description">Description</Label>
+            <Textarea name="description" maxLength={100}></Textarea>
           </FormTagsContainer>
           <FormTagsContainer>
             <Label>Text: </Label>
             <EditorContainer>
-              <Editor
+              <EditorWysiwyg
                 onEditorStateChange={(value) => setEditorState(value)}
                 editorState={editorState}
                 wrapperStyle={{

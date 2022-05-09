@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Avatar from "./Avatar";
 
@@ -61,6 +62,21 @@ const Description = styled.h2`
 `;
 
 export default function ArticleSection() {
+  // const [state, setState] = useState(
+  //   () => EditorState.createEmpty()
+  // )
+  // useEffect(() => {
+  //   fetch()
+  //   //TODO: converting html to editor state
+  //   const blocksFromHTML = convertFromHTML(data.text);
+  //   const stat = ContentState.createFromBlockArray(
+  //           blocksFromHTML.contentBlocks,
+  //           blocksFromHTML.entityMap,
+  //         );
+  //   setState(EditorState.createWithContent(stat))
+  // }, []);
+
+
   return (
     <>
     <Section>
@@ -77,64 +93,8 @@ export default function ArticleSection() {
         <Description>{article.description}</Description>
       </HeaderContainer>
       <ArticleText>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nesciunt
-        perferendis asperiores, quidem voluptate, commodi, qui dolores dolor
-        nobis error dolorum architecto cupiditate eos optio ex sunt quis! Aut
-        recusandae autem consectetur unde molestias architecto delectus
-        repudiandae voluptate, culpa incidunt voluptatibus odit magni quas
-        inventore soluta velit, iste aliquam! Harum voluptas cumque tempora
-        <br />
-        <br />
-        optio sapiente velit. Deleniti error hic adipisci amet aut, ullam quas
-        iste accusantium ad autem eveniet ipsa asperiores neque, numquam in
-        natus temporibus iure. Quisquam ipsum dignissimos repellat quis sint
-        rerum laudantium neque, nobis architecto cumque obcaecati illum, enim
-        facilis consectetur quaerat eveniet quas libero eos voluptas, quos dicta
-        nostrum mollitia. Assumenda veritatis reiciendis consequuntur quas,
-        nobis nemo ex illo, veniam, eligendi at sint ducimus aliquid! Expedita
-        error, laudantium exercitationem aspernatur tempora, maxime praesentium
-        quas reiciendis, fugiat modi illo. Ex voluptas atque totam molestias.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nesciunt
-        perferendis asperiores, quidem voluptate, commodi, qui dolores dolor
-        nobis error dolorum architecto cupiditate eos optio ex sunt quis! Aut
-        recusandae autem consectetur unde molestias architecto delectus
-        <br />
-        <br />
-        repudiandae voluptate, culpa incidunt volup Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Nulla nesciunt perferendis asperiores,
-        quidem voluptate, commodi, qui dolores dolor nobis error dolorum
-        architecto cupiditate eos optio ex sunt quis! Aut recusandae autem
-        consectetur unde molestias architecto delectus repudiandae voluptate,
-        culpa incidunt voluptatibus odit magni quas inventore soluta velit, iste
-        aliquam! Harum voluptas cumque tempora optio sapiente velit. Deleniti
-        error hic adipisci amet aut, ullam quas iste accusantium ad autem
-        eveniet ipsa asperiores neque, numquam in natus temporibus iure.
-        Quisquam ipsum dignissimos repellat quis sint rerum laudantium neque,
-        nobis architecto cumque obcaecati illum, enim facilis consectetur
-        quaerat eveniet quas libero eos voluptas, quos dicta nostrum mollitia.
-        Assumenda veritatis reiciendis consequuntur quas, nobis nemo ex illo,
-        veniam, eligendi at sint ducimus aliquid! Expedita error, laudantium
-        exercitationem aspernatur tempora, maxime praesentium quas reiciendis,
-        fugiat modi illo. Ex voluptas atque totam molestias.tatibus odit magni
-        quas inventore soluta velit, iste aliquam! Harum voluptas cumque tempora
-        optio sapiente velit. Deleniti error hic adipisci amet aut, ullam quas
-        iste accusantium ad autem eveniet ipsa asperiores neque, numquam in
-        <br />
-        <br />
-        natus temporibus iure. Quisquam ipsum dignissimos repellat quis sint
-        rerum laudantium neque, nobis architecto cumque obcaecati illum, enim
-        facilis consectetur quaerat eveniet quas libero eos voluptas, quos dicta
-        nostrum mollitia. Assumenda veritatis reiciendis consequuntur quas,
-        nobis nemo ex illo, veniam, eligendi at sint ducimus aliquid! Expedita
-        error, laudantium exercitationem aspernatur tempora, maxime praesentium
-        quas reiciendis, fugiat modi illo. Ex voluptas atque totam molestias.
-        Vitae animi maiores inventore quaerat autem quae sit nostrum facere
-        voluptates ab rerum velit molestias cum repudiandae, nisi accusantium
-        impedit quod minima esse quis expedita, voluptatibus dolores quo.
-        Aspernatur consequatur molestias voluptate in, placeat eaque. Veritatis
-        at laboriosam inventore nesciunt quia omnis, odio enim. Accusantium
-        voluptatibus error doloremque consectetur totam atque fuga nam eos
-        laudantium alias, reiciendis ipsam ipsa molestias est possimus. Aperiam?
+        {/* <Editor editorState={state} /> */}
+              
       </ArticleText>
     </Section>
 
