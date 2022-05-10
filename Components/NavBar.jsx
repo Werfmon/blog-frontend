@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import Avatar from "./Avatar";
 import {getToLoginPage} from '../utils/getToLoginPage'
-
+import {Context} from '../pages/index'
+import {isLogged} from '../utils/isLogged'
 const Nav = styled.nav`
   width: 100%;
   height: 4rem;
@@ -52,8 +53,24 @@ const WriteButton = styled.button`
 
 export default function NavBar() {
   const [userLogged, setUserLogged] = useState(false);
-
-  //TODO: fetch
+  
+  useEffect(() => {
+    let token = isLogged();
+    if(token !== false){
+      let uuid = token.substr(36, 36);
+      fetch("http://localhost:8080/app/user/" + uuid, {
+        method: "GET",
+        headers: {
+          'Authorization': token,
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        setUserLogged(true);
+      })
+      .catch(err => console.error(err));
+    }
+  }, []);
 
   return (
     <Nav>

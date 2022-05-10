@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
+import {Context} from '../index';
 import styled from "styled-components";
 import BackButton from "../../Components/BackButton";
 import { getToMainPage } from "../../utils/getToMainPage";
 import { getToRegistrationPage } from '../../utils/getToRegistrationPage';
-
+import {isLogged} from '../../utils/isLogged'
 const Card = styled.div`
   margin: 0 auto;
   min-width: 25rem;
@@ -72,6 +73,31 @@ const HeadCard = styled.div`
   padding: 20px 0 32px 20px;
 `;
 export default function login() {
+  const context = useContext(Context);
+  function login(e) {
+
+    e.preventDefault();
+
+    let data = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    }
+
+    fetch(`${context.BACKEND}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(res => {
+      if(res.ok) {
+        return res.json();
+      }
+    }).then(data => {
+      window.sessionStorage.setItem('token', data.data);
+    })
+  }
+
   return (
     <Container>
       <Card>
@@ -79,9 +105,9 @@ export default function login() {
           <Title>Login</Title>
           <BackButton action={getToMainPage} />
         </HeadCard>
-        <Form onSubmit={() => {}}>
-          <Input placeholder='E-mail' />
-          <Input placeholder='Password'/>
+        <Form onSubmit={login}>
+          <Input type='email' name="email" placeholder='E-mail' />
+          <Input type='password' name="password" placeholder='Password'/>
           <ButtonContainer>
             <TextButton onClick={getToRegistrationPage}>Not registered?</TextButton>
             <Button>Login</Button>

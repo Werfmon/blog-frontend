@@ -31,7 +31,7 @@ const Span = styled.span`
 
 export default function Home() {
   return (
-    <Context.Provider>
+    <Context.Provider value={{BACKEND: 'http://localhost:8080'}}>
       <Header>
       <HeaderSvgBlob />
         <NavBar />

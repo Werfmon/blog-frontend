@@ -55,120 +55,120 @@ export default function article() {
             <linearGradient id="grad1_0" x1="58.3%" y1="100%" x2="100%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#3c6dfa"
-                stop-opacity="1"
+                stopColor="#3c6dfa"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#3c6dfa" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#3c6dfa" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
           <defs>
             <linearGradient id="grad1_1" x1="58.3%" y1="100%" x2="100%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#3c6dfa"
-                stop-opacity="1"
+                stopColor="#3c6dfa"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#0055dd" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#0055dd" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
           <defs>
             <linearGradient id="grad1_2" x1="58.3%" y1="100%" x2="100%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#003ec0"
-                stop-opacity="1"
+                stopColor="#003ec0"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#0055dd" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#0055dd" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
           <defs>
             <linearGradient id="grad1_3" x1="58.3%" y1="100%" x2="100%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#003ec0"
-                stop-opacity="1"
+                stopColor="#003ec0"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#0029a4" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#0029a4" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
           <defs>
             <linearGradient id="grad1_4" x1="58.3%" y1="100%" x2="100%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#001788"
-                stop-opacity="1"
+                stopColor="#001788"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#0029a4" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#0029a4" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
           <defs>
             <linearGradient id="grad1_5" x1="58.3%" y1="100%" x2="100%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#001788"
-                stop-opacity="1"
+                stopColor="#001788"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#000000" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#000000" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
           <defs>
             <linearGradient id="grad2_0" x1="0%" y1="100%" x2="41.7%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#3c6dfa"
-                stop-opacity="1"
+                stopColor="#3c6dfa"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#3c6dfa" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#3c6dfa" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
           <defs>
             <linearGradient id="grad2_1" x1="0%" y1="100%" x2="41.7%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#0055dd"
-                stop-opacity="1"
+                stopColor="#0055dd"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#3c6dfa" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#3c6dfa" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
           <defs>
             <linearGradient id="grad2_2" x1="0%" y1="100%" x2="41.7%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#0055dd"
-                stop-opacity="1"
+                stopColor="#0055dd"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#003ec0" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#003ec0" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
           <defs>
             <linearGradient id="grad2_3" x1="0%" y1="100%" x2="41.7%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#0029a4"
-                stop-opacity="1"
+                stopColor="#0029a4"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#003ec0" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#003ec0" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
           <defs>
             <linearGradient id="grad2_4" x1="0%" y1="100%" x2="41.7%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#0029a4"
-                stop-opacity="1"
+                stopColor="#0029a4"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#001788" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#001788" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
           <defs>
             <linearGradient id="grad2_5" x1="0%" y1="100%" x2="41.7%" y2="0%">
               <stop
                 offset="2.0000000000000036%"
-                stop-color="#000000"
-                stop-opacity="1"
+                stopColor="#000000"
+                stopOpacity="1"
               ></stop>
-              <stop offset="98%" stop-color="#001788" stop-opacity="1"></stop>
+              <stop offset="98%" stopColor="#001788" stopOpacity="1"></stop>
             </linearGradient>
           </defs>
 
