@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import {
   EditorState,
@@ -9,7 +9,8 @@ import {
 import { convertToHTML } from "draft-convert";
 import styled from "styled-components";
 import convertFromHTMLToContentBlocks from "draft-js/lib/convertFromHTMLToContentBlocks";
-import { Editor } from "draft-js";
+import { Context } from "../../index";
+import { isLogged } from "../../../utils/isLogged";
 const EditorWysiwyg = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
   {
@@ -79,21 +80,62 @@ const ShareButtonContaineer = styled.div`
   display: flex;
   justify-content: end;
 `;
+const Select = styled.select`
+  background: #53535329;
+  width: 80%;
+  height: 2rem;
+  padding-left: 12px;
+  transition: all 0.4s;
+  color: #fff;
+  & > option {
+    color: #fff;
+    background: #000;
+
+  }
+  &:focus {
+    border-color: #ffffff80;
+  }
+`;
 export default function creator() {
+  const [categories, setCategories] = useState(null);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
-
+  const context = useContext(Context);
+  useEffect(() => {
+    const token = isLogged();
+    fetch(`${context.BACKEND}/app/category/all`, {
+      headers: {
+        authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data.data)
+      })
+      .catch((err) => console.error(err));
+  }, []);
+  
 
   function createArticle(e) {
-    e.preventDefault()
+    e.preventDefault();
+    const token = isLogged();
     let data = {
       title: e.target.title.value,
       description: e.target.description.value,
       text: convertToHTML(editorState.getCurrentContent()),
-    } 
-    //TODO
-    // fetch()
+      category_id: e.target.category.value,
+      user_uuid: token.substr(36, 36)
+    };
+    console.log(data);
+   fetch(`${context.BACKEND}/app/article`, {
+     method: 'POST',
+     headers: {
+       'content-type': 'application/json',
+       authorization: token
+     },
+     body: JSON.stringify(data)
+   }).catch(err => console.error(err));
   }
   return (
     <>
@@ -107,6 +149,15 @@ export default function creator() {
           <FormTagsContainer>
             <Label htmlFor="description">Description</Label>
             <Textarea name="description" maxLength={100}></Textarea>
+          </FormTagsContainer>
+          <FormTagsContainer>
+            <Label htmlFor="category">Category Name: </Label>
+            <Select name="category">
+              {categories &&
+                categories.map((category, i) => 
+                  <option value={category.id}>{category.name}</option>
+                )}
+            </Select>
           </FormTagsContainer>
           <FormTagsContainer>
             <Label>Text: </Label>
@@ -126,16 +177,12 @@ export default function creator() {
                   backgroundColor: "#53535329",
                 }}
                 toolbar={{
-                  options: [
-                    "inline",
-                    "list",
-                    "textAlign",
-                  ],
+                  options: ["inline", "list", "textAlign"],
                   textAlign: {
-                    className: 'other'
+                    className: "other",
                   },
                   list: {
-                    className: 'other'
+                    className: "other",
                   },
                   inline: {
                     className: "icons",
@@ -143,9 +190,8 @@ export default function creator() {
                     bold: { className: "icon" },
                     italic: { className: "icon" },
                     underline: { className: "icon" },
-                  },                
+                  },
                 }}
-                
               />
             </EditorContainer>
           </FormTagsContainer>
@@ -154,6 +200,6 @@ export default function creator() {
           </ShareButtonContaineer>
         </Form>
       </Main>
-     </>
+    </>
   );
 }

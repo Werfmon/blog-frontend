@@ -4,6 +4,8 @@ import Avatar from "./Avatar";
 import {getToLoginPage} from '../utils/getToLoginPage'
 import {Context} from '../pages/index'
 import {isLogged} from '../utils/isLogged'
+import { logout } from "../utils/logout";
+import { goToWriteArticle } from "../utils/goToWriteArticle";
 const Nav = styled.nav`
   width: 100%;
   height: 4rem;
@@ -78,8 +80,8 @@ export default function NavBar() {
       <UserSection>
         {userLogged ? (
           <>
-            <WriteButton>Write</WriteButton>
-            <LogoutButton>
+            <WriteButton onClick={goToWriteArticle}>Write</WriteButton>
+            <LogoutButton onClick={logout}>
               <svg
                 width="19"
                 height="18"

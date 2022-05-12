@@ -95,6 +95,7 @@ export default function login() {
       }
     }).then(data => {
       window.sessionStorage.setItem('token', data.data);
+      getToMainPage();
     })
   }
 

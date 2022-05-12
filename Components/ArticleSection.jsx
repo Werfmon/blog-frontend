@@ -2,7 +2,14 @@ import React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Avatar from "./Avatar";
+import { Editor } from "draft-js";
 
+import {
+  EditorState,
+  ContentState,
+  convertFromHTML,
+  convertToRaw,
+} from "draft-js";
 const Section = styled.section`
   margin: 0 auto;
   width: 55%;
@@ -40,16 +47,7 @@ const FrameReadTime = styled.p`
   bottom: 0;
   position: absolute;
 `;
-const author = {
-  name: "Jan",
-  surname: "Novák",
-  role: "Web designer",
-};
-const article = {
-  readTime: 5,
-  name: "Transport Layer",
-  description: "Difference between UDP and TCP",
-};
+
 const HeaderContainer = styled.div``;
 const ArticleName = styled.h1`
   font-weight: 900;
@@ -61,20 +59,21 @@ const Description = styled.h2`
   font-weight: 400;
 `;
 
-export default function ArticleSection() {
-  // const [state, setState] = useState(
-  //   () => EditorState.createEmpty()
-  // )
-  // useEffect(() => {
-  //   fetch()
-  //   //TODO: converting html to editor state
-  //   const blocksFromHTML = convertFromHTML(data.text);
-  //   const stat = ContentState.createFromBlockArray(
-  //           blocksFromHTML.contentBlocks,
-  //           blocksFromHTML.entityMap,
-  //         );
-  //   setState(EditorState.createWithContent(stat))
-  // }, []);
+export default function ArticleSection({articleData}) {
+  const [state, setState] = useState(
+    () => EditorState.createEmpty()
+  )
+  const [readTime, setReadTime] = useState(0);
+  useEffect(() => {
+    console.log(articleData.article_text);
+    const blocksFromHTML = convertFromHTML(articleData.article_text);
+    const stat = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap,
+          );
+    setState(EditorState.createWithContent(stat))
+    setReadTime(articleData.article_read_time?.m + Math.ceil(parseFloat("0." + articleData.article_read_time?.s)));
+  }, [articleData]);
 
 
   return (
@@ -83,21 +82,19 @@ export default function ArticleSection() {
       <FrameContainer>
         <Avatar size={70} />
         <FrameChild>
-          <p>{`${author.name} ${author.surname}`}</p>
-          <FrameAuthorRole>{author.role}</FrameAuthorRole>
-          <FrameReadTime>{article.readTime} min read</FrameReadTime>
+          <p>{`${articleData.user_name} ${articleData.user_surname}`}</p>
+          <FrameAuthorRole>{articleData.user_role}</FrameAuthorRole>
+          <FrameReadTime>{readTime} min read</FrameReadTime>
         </FrameChild>
       </FrameContainer>
       <HeaderContainer>
-        <ArticleName>{article.name}</ArticleName>
-        <Description>{article.description}</Description>
+        <ArticleName>{articleData.article_name}</ArticleName>
+        <Description>{articleData.article_description}</Description>
       </HeaderContainer>
       <ArticleText>
-        {/* <Editor editorState={state} /> */}
-              
+        {state && <Editor editorState={state} readOnly />}
       </ArticleText>
     </Section>
-
     </>
   );
 }
