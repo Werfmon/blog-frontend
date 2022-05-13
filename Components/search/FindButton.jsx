@@ -17,6 +17,7 @@ const Button = styled.button`
   top: 50%;
   left: 50%;
   position: absolute;
+  cursor: pointer;
 `;
 const Svg = styled.svg`
   z-index: 0;

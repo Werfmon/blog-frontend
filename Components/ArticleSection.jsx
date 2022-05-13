@@ -90,7 +90,7 @@ export default function ArticleSection({ articleData }) {
             <FrameReadTime>{readTime} min read</FrameReadTime>
           </FrameChild>
         </FrameContainer>
-        <FrameLikes>{articleData.likes} Likes</FrameLikes>
+        {articleData.likes && <FrameLikes>{articleData.likes} {articleData.likes === 1 ? 'Like' : 'Likes'}</FrameLikes>}
         <HeaderContainer>
           <ArticleName>{articleData.article_name}</ArticleName>
           <Description>{articleData.article_description}</Description>
