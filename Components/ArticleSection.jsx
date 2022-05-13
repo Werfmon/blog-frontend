@@ -19,10 +19,10 @@ const Section = styled.section`
   background-color: #1a1a1a56;
   padding: 45px;
   border-radius: 20px;
-  @media screen and (max-width: 700px){
+  @media screen and (max-width: 700px) {
     width: 90%;
   }
-  @media screen and (min-width: 700px) and (max-width: 900px){
+  @media screen and (min-width: 700px) and (max-width: 900px) {
     width: 70%;
   }
 `;
@@ -47,6 +47,9 @@ const FrameReadTime = styled.p`
   bottom: 0;
   position: absolute;
 `;
+const FrameLikes = styled.p`
+  padding-left: 3px;
+`;
 
 const HeaderContainer = styled.div``;
 const ArticleName = styled.h1`
@@ -55,46 +58,47 @@ const ArticleName = styled.h1`
 `;
 const Description = styled.h2`
   font-size: 1rem;
-  padding: 10px 0;
+  padding: 10px 4px;
   font-weight: 400;
 `;
 
-export default function ArticleSection({articleData}) {
-  const [state, setState] = useState(
-    () => EditorState.createEmpty()
-  )
+export default function ArticleSection({ articleData }) {
+  const [state, setState] = useState(() => EditorState.createEmpty());
   const [readTime, setReadTime] = useState(0);
   useEffect(() => {
     console.log(articleData.article_text);
     const blocksFromHTML = convertFromHTML(articleData.article_text);
     const stat = ContentState.createFromBlockArray(
-            blocksFromHTML.contentBlocks,
-            blocksFromHTML.entityMap,
-          );
-    setState(EditorState.createWithContent(stat))
-    setReadTime(articleData.article_read_time?.m + Math.ceil(parseFloat("0." + articleData.article_read_time?.s)));
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
+    setState(EditorState.createWithContent(stat));
+    setReadTime(
+      articleData.article_read_time?.m +
+        Math.ceil(parseFloat("0." + articleData.article_read_time?.s))
+    );
   }, [articleData]);
-
 
   return (
     <>
-    <Section>
-      <FrameContainer>
-        <Avatar size={70} />
-        <FrameChild>
-          <p>{`${articleData.user_name} ${articleData.user_surname}`}</p>
-          <FrameAuthorRole>{articleData.user_role}</FrameAuthorRole>
-          <FrameReadTime>{readTime} min read</FrameReadTime>
-        </FrameChild>
-      </FrameContainer>
-      <HeaderContainer>
-        <ArticleName>{articleData.article_name}</ArticleName>
-        <Description>{articleData.article_description}</Description>
-      </HeaderContainer>
-      <ArticleText>
-        {state && <Editor editorState={state} readOnly />}
-      </ArticleText>
-    </Section>
+      <Section>
+        <FrameContainer>
+          <Avatar size={70} />
+          <FrameChild>
+            <p>{`${articleData.user_name} ${articleData.user_surname}`}</p>
+            <FrameAuthorRole>{articleData.user_role}</FrameAuthorRole>
+            <FrameReadTime>{readTime} min read</FrameReadTime>
+          </FrameChild>
+        </FrameContainer>
+        <FrameLikes>{articleData.likes} Likes</FrameLikes>
+        <HeaderContainer>
+          <ArticleName>{articleData.article_name}</ArticleName>
+          <Description>{articleData.article_description}</Description>
+        </HeaderContainer>
+        <ArticleText>
+          {state && <Editor editorState={state} readOnly />}
+        </ArticleText>
+      </Section>
     </>
   );
 }

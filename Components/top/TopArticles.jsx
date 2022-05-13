@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Context } from "../../pages";
-import TopArticleCard from "../ArticleCard";
+import ArticleCard from "../ArticleCard";
 
 const Title = styled.h2`
   color: #fff;
@@ -70,14 +70,14 @@ export default function TopArticles() {
         {topArticle ? (
           <>
             <CardContainerRow>
-              {topArticle[0] && <TopArticleCard topArticle={topArticle[0]} />}
-              {topArticle[1] && <TopArticleCard topArticle={topArticle[1]} />}
-              {topArticle[2] && <TopArticleCard topArticle={topArticle[2]} />}
+              {topArticle[0] && <ArticleCard article={topArticle[0]} />}
+              {topArticle[1] && <ArticleCard article={topArticle[1]} />}
+              {topArticle[2] && <ArticleCard article={topArticle[2]} />}
             </CardContainerRow>
             <CardContainerRow>
-              {topArticle[0] && <TopArticleCard topArticle={topArticle[0]} />}
-              {topArticle[1] && <TopArticleCard topArticle={topArticle[1]} />}
-              {topArticle[2] && <TopArticleCard topArticle={topArticle[2]} />}
+              {topArticle[0] && <ArticleCard article={topArticle[0]} />}
+              {topArticle[1] && <ArticleCard article={topArticle[1]} />}
+              {topArticle[2] && <ArticleCard article={topArticle[2]} />}
             </CardContainerRow>
           </>
         ) : (

@@ -25,8 +25,8 @@ export default function ExploreMore() {
   return (
     <Container>
       <Title>Explore more!</Title>
-
       <Search />
+    
     </Container>
   );
 }

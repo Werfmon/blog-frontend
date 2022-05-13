@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import styled from "styled-components";
+import { Context } from "../../pages";
+import ArticleCard from "../ArticleCard";
 import FindButton from "./FindButton";
 
-const Container = styled.div`
+const Form = styled.form`
   height: 10rem;
   width: 100%;
   margin: 0 auto;
@@ -26,7 +28,7 @@ const Input = styled.input`
   padding-block: 5px;
   background: unset;
   letter-spacing: 1px;
-  transition: all .4s;
+  transition: all 0.4s;
   &::placeholder {
     color: #ffffff81;
     font-size: 1.9rem;
@@ -35,12 +37,35 @@ const Input = styled.input`
     border-color: #0505dbfd;
   }
 `;
-
+const CardContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+`;
 export default function Search() {
+  const [articles, setArticles] = useState(null);
+  const context = useContext(Context);
+
+  function searchByArgs(e) {
+    e.preventDefault();
+    const searchText = e.target.search.value;
+
+    fetch(`${context.BACKEND}/api/article/search?search=${searchText}`)
+      .then(res => res.json())
+      .then(data => setArticles(data.data))
+      .catch(err => console.error(err));
+  }
+
   return (
-    <Container>
-      <Input placeholder="Search..." />
+    <>
+      <Form onSubmit={searchByArgs}>
+        <Input type='text' name="search" placeholder="Search..." />
         <FindButton text="Find" />
-    </Container>
+      </Form>
+      <CardContainer>
+        {articles && articles.map(article => <ArticleCard article={article} />)}
+      </CardContainer>
+    </>
   );
 }

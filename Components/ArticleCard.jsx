@@ -48,7 +48,7 @@ const FrameAuthorRole = styled.p`
   color: #fffafa57;
 `
 
-export default function ArticleCard({topArticle}) {
+export default function ArticleCard({article}) {
 
   function showArticle(e) {
     const articleUuid = e.target.attributes.value.value;
@@ -57,16 +57,16 @@ export default function ArticleCard({topArticle}) {
 
   return (
     <Card onClick={showArticle}>
-      <Title>{topArticle.article_title}</Title>
-      <Description>{topArticle.article_description}</Description>
+      <Title>{article.article_title}</Title>
+      <Description>{article.article_description}</Description>
       <FrameContainer>
         <Avatar size={50}/>
         <FrameChild>
-          <p>{`${topArticle.user_name} ${topArticle.user_surname}`}</p>
-          <FrameAuthorRole>{topArticle.role_name}</FrameAuthorRole>
+          <p>{`${article.user_name} ${article.user_surname}`}</p>
+          <FrameAuthorRole>{article.role_name}</FrameAuthorRole>
         </FrameChild>
       </FrameContainer>
-      <CardClick onClick={e => showArticle(e)} value={topArticle.article_uuid}></CardClick>
+      <CardClick onClick={e => showArticle(e)} value={article.article_uuid}></CardClick>
     </Card>
   )
 }

@@ -1,12 +1,12 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const ButtonContainer = styled.div`
   position: relative;
   margin-left: 6rem;
 `;
 const Button = styled.button`
-  background: linear-gradient(100deg,  #0505dbbd, #171768);
+  background: linear-gradient(100deg, #0505dbbd, #171768);
   width: 9rem;
   height: 3rem;
   border-radius: 50px;
@@ -17,8 +17,7 @@ const Button = styled.button`
   top: 50%;
   left: 50%;
   position: absolute;
-
-`
+`;
 const Svg = styled.svg`
   z-index: 0;
   position: absolute;
@@ -31,12 +30,11 @@ const Svg = styled.svg`
   //TODO: media query, pri male sirce display: none
 `;
 
-export default function FindButton({text}) {
+export default function FindButton({ text }) {
   return (
     <ButtonContainer>
-
-    <Button>{text}</Button>
-    <Svg
+      <Button type="submit">{text}</Button>
+      <Svg
         version="1.1"
         id="Capa_1"
         xmlns="http://www.w3.org/2000/svg"
@@ -55,5 +53,5 @@ export default function FindButton({text}) {
         />
       </Svg>
     </ButtonContainer>
-  )
+  );
 }

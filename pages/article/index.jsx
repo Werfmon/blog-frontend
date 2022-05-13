@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ArticleSection from "../../Components/ArticleSection";
 import BackButton from "../../Components/BackButton";
 import { getToMainPage } from "../../utils/getToMainPage";
+import { isLogged } from "../../utils/isLogged";
 import { Context } from "../index";
 
 const Main = styled.main`
@@ -42,16 +43,14 @@ const IconContainer = styled.div`
     margin-inline: 10px;
     cursor: pointer;
   }
-
 `;
 const ShareIcon = styled.button`
   position: relative;
   background-color: unset;
   &:focus-within::after {
     opacity: 1;
-
   }
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
   &::after {
@@ -71,10 +70,14 @@ const ShareIcon = styled.button`
 `;
 export default function article() {
   const [article, setArticle] = useState(null);
+  const [logged, setLogged] = useState(false);
   const context = useContext(Context);
 
   useEffect(() => {
     const articleUuid = window.location.search.replace("?uuid=", "");
+
+    setLogged(!!isLogged());
+
     fetch(`${context.BACKEND}/api/article?uuid=${articleUuid}`)
       .then((res) => res.json())
       .then((data) => {
@@ -85,7 +88,34 @@ export default function article() {
   function copyLink() {
     navigator.clipboard.writeText(location.href);
   }
-  //TODO: like, save
+  function likeArticle() {
+    const token = isLogged();
+    const articleUuid = window.location.search.replace("?uuid=", "");
+    const userUuid = token.substr(36, 36);
+    fetch(
+      `${context.BACKEND}/app/article/like?article-uuid=${articleUuid}&user-uuid=${userUuid}`,
+      {
+        method: "POST",
+        headers: {
+          authorization: token,
+        },
+      }
+    ).catch((err) => console.error(err));
+  }
+  function saveArticle() {
+    const token = isLogged();
+    const articleUuid = window.location.search.replace("?uuid=", "");
+    const userUuid = token.substr(36, 36);
+    fetch(
+      `${context.BACKEND}/app/article/save?article-uuid=${articleUuid}&user-uuid=${userUuid}`,
+      {
+        method: "POST",
+        headers: {
+          authorization: token,
+        },
+      }
+    ).catch((err) => console.error(err));
+  }
   return (
     <>
       <Main>
@@ -258,18 +288,21 @@ export default function article() {
         <div>
           <BackButton action={getToMainPage} />
           <IconContainer>
-            <svg
-              width="23"
-              height="23"
-              viewBox="0 0 33 30"
-              fill="#fff"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M32.3196 3.23697C32.3196 1.48344 30.5795 0.0437856 28.4296 0.00527537V0H4.49919C2.32206 0 0.550781 1.4407 0.550781 3.2127V30L12.8693 23.3182L25.1878 30V13.1884H32.3196V3.23697ZM23.8912 28.0291L12.8693 22.05L1.84747 28.0291V3.2127C1.84747 2.02311 3.03718 1.05507 4.49919 1.05507H25.2566C24.6192 1.56257 24.166 2.22199 23.9826 2.96001L23.9819 2.9616C23.9527 3.07871 23.9301 3.19793 23.9151 3.31874C23.8996 3.44165 23.8912 3.56668 23.8912 3.69276V13.1884V28.0291ZM31.0229 12.1334H25.1878V3.69276C25.1878 3.5134 25.2105 3.33878 25.2527 3.16945C25.5036 2.1724 26.4573 1.37635 27.6697 1.13579C27.693 1.13104 27.7138 1.1226 27.7371 1.11891C27.8947 1.09042 28.06 1.0804 28.2253 1.07196C28.2791 1.06932 28.3304 1.0593 28.3848 1.05877C29.841 1.07829 31.0229 2.05107 31.0229 3.23697V12.1334Z"
+            {logged && (
+              <svg
+                onClick={saveArticle}
+                width="23"
+                height="23"
+                viewBox="0 0 33 30"
                 fill="#fff"
-              />
-            </svg>
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M32.3196 3.23697C32.3196 1.48344 30.5795 0.0437856 28.4296 0.00527537V0H4.49919C2.32206 0 0.550781 1.4407 0.550781 3.2127V30L12.8693 23.3182L25.1878 30V13.1884H32.3196V3.23697ZM23.8912 28.0291L12.8693 22.05L1.84747 28.0291V3.2127C1.84747 2.02311 3.03718 1.05507 4.49919 1.05507H25.2566C24.6192 1.56257 24.166 2.22199 23.9826 2.96001L23.9819 2.9616C23.9527 3.07871 23.9301 3.19793 23.9151 3.31874C23.8996 3.44165 23.8912 3.56668 23.8912 3.69276V13.1884V28.0291ZM31.0229 12.1334H25.1878V3.69276C25.1878 3.5134 25.2105 3.33878 25.2527 3.16945C25.5036 2.1724 26.4573 1.37635 27.6697 1.13579C27.693 1.13104 27.7138 1.1226 27.7371 1.11891C27.8947 1.09042 28.06 1.0804 28.2253 1.07196C28.2791 1.06932 28.3304 1.0593 28.3848 1.05877C29.841 1.07829 31.0229 2.05107 31.0229 3.23697V12.1334Z"
+                  fill="#fff"
+                />
+              </svg>
+            )}
             <ShareIcon onClick={copyLink}>
               <svg
                 width="23"
@@ -284,18 +317,21 @@ export default function article() {
                 />
               </svg>
             </ShareIcon>
-            <svg
-              width="23"
-              height="23"
-              viewBox="0 0 30 28"
-              fill="#fff"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M27.5768 3.26133C26.0059 1.69042 23.9262 0.831824 21.7066 0.831824C19.487 0.831824 17.4009 1.69678 15.83 3.26769L15.0095 4.08812L14.1764 3.25497C12.6055 1.68406 10.5131 0.812744 8.29342 0.812744C6.08016 0.812744 3.99409 1.6777 2.42954 3.24225C0.858629 4.81316 -0.00632514 6.89923 3.48253e-05 9.11885C3.48253e-05 11.3385 0.871349 13.4182 2.44226 14.9891L14.3863 26.9331C14.5516 27.0985 14.7742 27.1875 14.9905 27.1875C15.2067 27.1875 15.4293 27.1048 15.5947 26.9395L27.5641 15.0145C29.135 13.4436 30 11.3576 30 9.13793C30.0063 6.91831 29.1477 4.83224 27.5768 3.26133ZM26.3557 13.7998L14.9905 25.1205L3.65065 13.7807C2.4041 12.5342 1.71722 10.8806 1.71722 9.11885C1.71722 7.35714 2.39774 5.70355 3.64429 4.46336C4.88448 3.22317 6.53807 2.53629 8.29342 2.53629C10.0551 2.53629 11.7151 3.22317 12.9616 4.46972L14.399 5.90707C14.7361 6.24415 15.2767 6.24415 15.6137 5.90707L17.0384 4.48244C18.2849 3.23589 19.9449 2.54901 21.7002 2.54901C23.4556 2.54901 25.1092 3.23589 26.3557 4.47608C27.6023 5.72263 28.2828 7.37622 28.2828 9.13793C28.2891 10.8996 27.6023 12.5532 26.3557 13.7998Z"
+            {logged && (
+              <svg
+                onClick={likeArticle}
+                width="23"
+                height="23"
+                viewBox="0 0 30 28"
                 fill="#fff"
-              />
-            </svg>
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M27.5768 3.26133C26.0059 1.69042 23.9262 0.831824 21.7066 0.831824C19.487 0.831824 17.4009 1.69678 15.83 3.26769L15.0095 4.08812L14.1764 3.25497C12.6055 1.68406 10.5131 0.812744 8.29342 0.812744C6.08016 0.812744 3.99409 1.6777 2.42954 3.24225C0.858629 4.81316 -0.00632514 6.89923 3.48253e-05 9.11885C3.48253e-05 11.3385 0.871349 13.4182 2.44226 14.9891L14.3863 26.9331C14.5516 27.0985 14.7742 27.1875 14.9905 27.1875C15.2067 27.1875 15.4293 27.1048 15.5947 26.9395L27.5641 15.0145C29.135 13.4436 30 11.3576 30 9.13793C30.0063 6.91831 29.1477 4.83224 27.5768 3.26133ZM26.3557 13.7998L14.9905 25.1205L3.65065 13.7807C2.4041 12.5342 1.71722 10.8806 1.71722 9.11885C1.71722 7.35714 2.39774 5.70355 3.64429 4.46336C4.88448 3.22317 6.53807 2.53629 8.29342 2.53629C10.0551 2.53629 11.7151 3.22317 12.9616 4.46972L14.399 5.90707C14.7361 6.24415 15.2767 6.24415 15.6137 5.90707L17.0384 4.48244C18.2849 3.23589 19.9449 2.54901 21.7002 2.54901C23.4556 2.54901 25.1092 3.23589 26.3557 4.47608C27.6023 5.72263 28.2828 7.37622 28.2828 9.13793C28.2891 10.8996 27.6023 12.5532 26.3557 13.7998Z"
+                  fill="#fff"
+                />
+              </svg>
+            )}
           </IconContainer>
         </div>
       </Footer>
