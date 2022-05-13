@@ -155,7 +155,7 @@ export default function creator() {
             <Select name="category">
               {categories &&
                 categories.map((category, i) => 
-                  <option value={category.id}>{category.name}</option>
+                  <option key={i} value={category.id}>{category.name}</option>
                 )}
             </Select>
           </FormTagsContainer>

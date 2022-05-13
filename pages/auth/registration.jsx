@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import styled from "styled-components";
 import BackButton from "../../Components/BackButton";
 import { getToLoginPage } from "../../utils/getToLoginPage";
@@ -90,6 +90,15 @@ const HeadCard = styled.div`
 
 export default function registration() {
   const context = useContext(Context);
+  const [roles, setRoles] = useState(null);
+
+  useEffect(() => {
+    fetch(`${context.BACKEND}/api/role/all`)
+      .then(res => res.json())
+      .then(data => setRoles(data.data))
+      .catch(err => console.error(err))
+  }, [])
+
   function register(e) {
     e.preventDefault();
 
@@ -128,10 +137,7 @@ export default function registration() {
           <Input type='text' name="surname" placeholder="last name" required />
           <Input type='email' name="email" placeholder="E-mail" required />
           <Select name="role" required>
-          {/**TODO: data brany s db */}
-            <option value={1}>Programmer</option>
-            <option value={2}>Designer</option>
-            <option value={3}>Coder</option>
+            {roles && roles.map((role, i) => <option key={i} value={role.id}>{role.name}</option>)}            
           </Select>
           <Select name="sex" required>
             <option value='man'>Man</option>
