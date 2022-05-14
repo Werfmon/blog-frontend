@@ -1,7 +1,11 @@
-import React from 'react'
+import React, {useContext, useState} from "react";
 import styled from "styled-components";
-import Avatar from './Avatar';
-import {goToArticle} from '../utils/goToArticle'
+import Avatar from "./Avatar";
+import { goToArticle } from "../utils/goToArticle";
+import { faBookmark, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Context } from "../pages";
+import { isLogged } from "../utils/isLogged";
 
 const Card = styled.div`
   position: relative;
@@ -14,7 +18,7 @@ const Card = styled.div`
   margin: 2rem;
   color: #dbdbdb;
   padding: 1.5rem;
-`
+`;
 const CardClick = styled.div`
   position: absolute;
   top: 0;
@@ -27,46 +31,121 @@ const CardClick = styled.div`
   border-radius: 20px;
   padding: 1.5rem;
   cursor: pointer;
-`
+`;
 const Title = styled.h3`
-  margin-bottom: .4rem;
-`
+  margin-bottom: 0.4rem;
+`;
 const Description = styled.p`
   color: #fffafa57;
-`
+`;
 const FrameContainer = styled.div`
   display: flex;
   gap: 1rem;
   position: absolute;
   bottom: 20px;
-`
+`;
 const FrameChild = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 const FrameAuthorRole = styled.p`
   color: #fffafa57;
+`;
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const Button = styled.button`
+  background-color: #ffffff00;
+  cursor: pointer;
+  position: absolute;
+  z-index: 30;
+  width: 1.2rem;
+  height: 1.2rem;
+  left: -3px;
 `
-
-export default function ArticleCard({article}) {
-
+const ButtonContainer = styled.div`
+position: relative;
+`
+export default function ArticleCard({ article, saved, liked, reload, setReload}) {
+  const context = useContext(Context)
   function showArticle(e) {
-    const articleUuid = e.target.attributes.value.value;
-    goToArticle(articleUuid);
+    if (!(saved || liked)) {
+      const articleUuid = e.target.attributes.value.value;
+      goToArticle(articleUuid);
+    }
   }
+  function unSaveArticle(e) {
+    const token = isLogged();
+    if(token) {
+      const userUuid = token.substr(36, 36);
+      fetch(`${context.BACKEND}/app/user/article/un-save?article-uuid=${e.target.value}&user-uuid=${userUuid}`, {
+        method: "DELETE",
+        headers: {
+          authorization: token
+        }
+      })
+      .then(res => res.ok && setReload(!reload))
+      .catch(err => console.error(err));
+    }
+  }
+  function unLikeArticle(e) {
+    const token = isLogged();
+    if(token) {
+      const userUuid = token.substr(36, 36);
+      fetch(`${context.BACKEND}/app/user/article/un-like?article-uuid=${e.target.value}&user-uuid=${userUuid}`, {
+        method: "DELETE",
+        headers: {
+          authorization: token
+        }
+      })
+      .then(res => {res.ok && setReload(!reload)})
+      .catch(err => console.error(err));
+    }
+  }
+
 
   return (
     <Card onClick={showArticle}>
-      <Title>{article.article_title}</Title>
+      <TitleContainer>
+        <Title>{article.article_title}</Title>
+        {saved && (
+          <ButtonContainer>
+
+          <Button 
+            value={article.article_uuid}
+            onClick={e => unSaveArticle(e)}
+          >
+          </Button>
+            <FontAwesomeIcon color="#fffffff8" size="1x" icon={faBookmark} />
+          </ButtonContainer>
+        )}
+        {liked && (
+          <ButtonContainer>
+
+          <Button 
+            value={article.article_uuid}
+            onClick={e => unLikeArticle(e)}
+          >
+          </Button>
+            <FontAwesomeIcon color="#fffffff8" size="1x" icon={faHeart} />
+          </ButtonContainer>
+        )}
+      </TitleContainer>
       <Description>{article.article_description}</Description>
       <FrameContainer>
-        <Avatar size={50}/>
+        <Avatar size={50} />
         <FrameChild>
           <p>{`${article.user_name} ${article.user_surname}`}</p>
           <FrameAuthorRole>{article.role_name}</FrameAuthorRole>
         </FrameChild>
       </FrameContainer>
-      <CardClick onClick={e => showArticle(e)} value={article.article_uuid}></CardClick>
+      {saved || (
+        <CardClick
+          onClick={(e) => showArticle(e)}
+          value={article.article_uuid}
+        ></CardClick>
+      )}
     </Card>
-  )
+  );
 }
