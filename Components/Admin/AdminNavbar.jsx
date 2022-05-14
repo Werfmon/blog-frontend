@@ -26,7 +26,7 @@ const Nav = styled.nav`
   align-items: center;
   flex-direction: column;
   gap: 1.5rem;
-  background-color: #242526;
+  background-color: #12131B;
   border-radius: 0 10px 10px 0;
 `;
 const IconFrame = styled.div`

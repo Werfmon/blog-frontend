@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
+import Head from "next/head";
 import styled from "styled-components";
+
 import { Context } from "../../index";
 
 import AdminNavbar from "../../../Components/Admin/AdminNavbar";
@@ -125,19 +127,38 @@ export default function edit() {
       email: e.target.email.value,
       role: parseInt(e.target.role.value),
       sex: e.target.sex.value,
-    }
+    };
     console.log(data, userUuid);
     fetch(`${context.BACKEND}/app/user/${userUuid}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'content-type': 'application/json',
+        "content-type": "application/json",
         authorization: token,
       },
-      body: JSON.stringify(data)
-    }).catch(err => console.error(err));
+      body: JSON.stringify(data),
+    }).catch((err) => console.error(err));
+  }
+  function updatePassword(e) {
+    e.preventDefault();
+    const token = isLogged();
+    const userUuid = token.substr(36, 36);
+    if(e.target.newPassword.value === e.target.newPasswordAgain.value) {
+      Email.send({
+        SecureToken: process.env.NEXT_PUBLIC_SECRET_KEY,
+        To: "d.vyroubal.w@gmail.com",
+        From: "proenix.blog@gmail.com",
+        Subject: "Password Update",
+        Body: `<h3>Click to link below for update</h3>\n
+        <a href='${context.BACKEND}/api/user/${userUuid}/password?password=${e.target.newPassword.value}&current=${e.target.password.value}&token=${token}'>Click here for update</a>
+        `,
+      }).then((message) => alert(message));
+    }
   }
   return (
     <>
+      <Head>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
+      </Head>
       <AdminNavbar />
       <Header>
         <h1>Edit Profile</h1>
@@ -198,18 +219,25 @@ export default function edit() {
             <HeadCard>
               <Title>Update Password</Title>
             </HeadCard>
-            <Form>
+            <Form onSubmit={updatePassword}>
               <Input
                 type="password"
                 name="password"
-                placeholder="Password"
+                placeholder="Current Password"
                 required
                 minLength={12}
               />
               <Input
                 type="password"
-                name="passwordAgain"
-                placeholder="Password again"
+                name="newPassword"
+                placeholder="New Password"
+                required
+                minLength={12}
+              />
+              <Input
+                type="password"
+                name="newPasswordAgain"
+                placeholder="New Password Again"
                 required
                 minLength={12}
               />
