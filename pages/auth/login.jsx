@@ -94,7 +94,9 @@ export default function login() {
         return res.json();
       }
     }).then(data => {
-      window.sessionStorage.setItem('token', data.data);
+      if(data) {
+        window.sessionStorage.setItem('token', data.data);
+      }
       getToMainPage();
     })
   }
