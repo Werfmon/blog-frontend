@@ -6,6 +6,7 @@ import {Context} from '../pages/index'
 import {isLogged} from '../utils/isLogged'
 import { logout } from "../utils/logout";
 import { goToWriteArticle } from "../utils/goToWriteArticle";
+import { goToAdmin } from "../utils/goToAdmin";
 const Nav = styled.nav`
   width: 100%;
   height: 4rem;
@@ -52,6 +53,12 @@ const WriteButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 `
+const AvatarContainer = styled.div`
+display:flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+`
 
 export default function NavBar() {
   const [userLogged, setUserLogged] = useState(false);
@@ -97,7 +104,9 @@ export default function NavBar() {
                 />
               </svg>
             </LogoutButton>
-            <Avatar size="30" />
+            <AvatarContainer onClick={goToAdmin}>
+              <Avatar size="30"/>
+            </AvatarContainer>
           </>
         ) : (
           <LoginButton onClick={getToLoginPage}>Login</LoginButton>
