@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Context } from "../../index";
 
 import AdminNavbar from "../../../Components/Admin/AdminNavbar";
+import { isLogged } from "../../../utils/isLogged";
 
 const Main = styled.main`
   margin: 0 auto;
@@ -83,18 +84,58 @@ const HeadCard = styled.div`
   padding: 20px 0 32px 20px;
 `;
 const CardConteiner = styled.div`
+  margin-top: 3rem;
   display: flex;
   flex-wrap: wrap;
-`
+`;
 export default function edit() {
   const context = useContext(Context);
   const [roles, setRoles] = useState(null);
+  const [oldUserData, setOldUserData] = useState(null);
   useEffect(() => {
     fetch(`${context.BACKEND}/api/role/all`)
       .then((res) => res.json())
       .then((data) => setRoles(data.data))
       .catch((err) => console.error(err));
   }, []);
+  useEffect(() => {
+    const token = isLogged();
+    const userUuid = token.substr(36, 36);
+    fetch(`${context.BACKEND}/app/user/info/${userUuid}`, {
+      headers: {
+        authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setOldUserData(data.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  function updateUser(e) {
+    e.preventDefault();
+
+    const token = isLogged();
+    const userUuid = token.substr(36, 36);
+
+    let data = {
+      name: e.target.name.value,
+      surname: e.target.surname.value,
+      email: e.target.email.value,
+      role: parseInt(e.target.role.value),
+      sex: e.target.sex.value,
+    }
+    console.log(data, userUuid);
+    fetch(`${context.BACKEND}/app/user/${userUuid}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+        authorization: token,
+      },
+      body: JSON.stringify(data)
+    }).catch(err => console.error(err));
+  }
   return (
     <>
       <AdminNavbar />
@@ -102,90 +143,99 @@ export default function edit() {
         <h1>Edit Profile</h1>
       </Header>
       <Main>
-      <CardConteiner>
-
-        <Card>
-          <HeadCard>
-            <Title>Update Profile</Title>
-          </HeadCard>
-          <Form>
-            <Input type="text" name="name" placeholder="Fist name" required />
-            <Input
-              type="text"
-              name="surname"
-              placeholder="last name"
-              required
-            />
-            <Input type="email" name="email" placeholder="E-mail" required />
-            <Select name="role" required>
-              {roles &&
-                roles.map((role, i) => (
-                  <option key={i} value={role.id}>
-                    {role.name}
-                  </option>
-                ))}
-            </Select>
-            <Select name="sex" required>
-              <option value="man">Man</option>
-              <option value="woman">Woman</option>
-              <option value="other">Other...</option>
-            </Select>
-            <ButtonContainer>
-              <Button>Update</Button>
-            </ButtonContainer>
-          </Form>
-        </Card>
-        <Card>
-          <HeadCard>
-            <Title>Update Password</Title>
-          </HeadCard>
-          <Form>
-           
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              minLength={12}
-            />
-            <Input
-              type="password"
-              name="passwordAgain"
-              placeholder="Password again"
-              required
-              minLength={12}
-            />
-            <ButtonContainer>
-              <Button>Update</Button>
-            </ButtonContainer>
-          </Form>
-        </Card>
-        <Card>
-          <HeadCard>
-            <Title>Delete Account</Title>
-          </HeadCard>
-          <Form>
-           
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              minLength={12}
-            />
-            <Input
-              type="password"
-              name="passwordAgain"
-              placeholder="Password again"
-              required
-              minLength={12}
-            />
-            <ButtonContainer>
-              <Button>Delete</Button>
-            </ButtonContainer>
-          </Form>
-        </Card>
-      </CardConteiner>
+        <CardConteiner>
+          <Card>
+            <HeadCard>
+              <Title>Update Profile</Title>
+            </HeadCard>
+            <Form onSubmit={updateUser}>
+              <Input
+                defaultValue={oldUserData ? oldUserData.user_name : ""}
+                type="text"
+                name="name"
+                placeholder="Fist name"
+                required
+              />
+              <Input
+                type="text"
+                name="surname"
+                placeholder="last name"
+                required
+                defaultValue={oldUserData ? oldUserData.user_surname : ""}
+              />
+              <Input
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                required
+                defaultValue={oldUserData ? oldUserData.user_email : ""}
+              />
+              <Select
+                name="role"
+                required
+                defaultValue={oldUserData ? oldUserData.user_role : 0}
+              >
+                {roles &&
+                  roles.map((role, i) => (
+                    <option key={i} value={role.id}>
+                      {role.name}
+                    </option>
+                  ))}
+              </Select>
+              {oldUserData && (
+                <Select name="sex" required defaultValue={oldUserData.user_sex}>
+                  <option value="man">Man</option>
+                  <option value="woman">Woman</option>
+                  <option value="other">Other...</option>
+                </Select>
+              )}
+              <ButtonContainer>
+                <Button>Update</Button>
+              </ButtonContainer>
+            </Form>
+          </Card>
+          <Card>
+            <HeadCard>
+              <Title>Update Password</Title>
+            </HeadCard>
+            <Form>
+              <Input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                minLength={12}
+              />
+              <Input
+                type="password"
+                name="passwordAgain"
+                placeholder="Password again"
+                required
+                minLength={12}
+              />
+              <ButtonContainer>
+                <Button>Update</Button>
+              </ButtonContainer>
+            </Form>
+          </Card>
+          <Card>
+            <HeadCard>
+              <Title>Delete Account</Title>
+            </HeadCard>
+            <Form>
+              <Input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                minLength={12}
+              />
+              <ButtonContainer>
+                <Button>Delete</Button>
+              </ButtonContainer>
+            </Form>
+          </Card>
+        </CardConteiner>
       </Main>
     </>
   );
