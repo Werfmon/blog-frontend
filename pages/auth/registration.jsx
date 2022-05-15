@@ -122,7 +122,8 @@ export default function registration() {
       if(res.ok) {
         alert('Registrace byla úspěšná');
       }
-    }).catch(err => console.error(err));
+      else return res.json();
+    }).then(data => alert(data.data)).catch(err => console.error(err));
   }
 
   return (
