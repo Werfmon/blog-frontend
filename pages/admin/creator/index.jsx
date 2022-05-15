@@ -74,6 +74,7 @@ const ShareButton = styled.button`
   border-radius: 8px;
   color: #ffffff;
   font-size: 1rem;
+  cursor: pointer;
 `;
 const ShareButtonContaineer = styled.div`
   width: calc(80% + 8rem);
@@ -91,7 +92,6 @@ const Select = styled.select`
   & > option {
     color: #fff;
     background: #000;
-
   }
   &:focus {
     border-color: #ffffff80;
@@ -105,43 +105,44 @@ export default function creator() {
   const context = useContext(Context);
   useEffect(() => {
     const token = isLogged();
-    if(token) {
-
+    if (token) {
       fetch(`${context.BACKEND}/app/category/all`, {
         headers: {
           authorization: token,
         },
       })
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data.data)
-      })
-      .catch((err) => console.error(err));
+        .then((res) => res.json())
+        .then((data) => {
+          setCategories(data.data);
+        })
+        .catch((err) => console.error(err));
     } else {
       getToMainPage();
     }
   }, []);
-  
 
   function createArticle(e) {
     e.preventDefault();
     const token = isLogged();
-    let data = {
-      title: e.target.title.value,
-      description: e.target.description.value,
-      text: convertToHTML(editorState.getCurrentContent()),
-      category_id: e.target.category.value,
-      user_uuid: token.substr(36, 36)
-    };
-    console.log(data);
-   fetch(`${context.BACKEND}/app/article`, {
-     method: 'POST',
-     headers: {
-       'content-type': 'application/json',
-       authorization: token
-     },
-     body: JSON.stringify(data)
-   }).catch(err => console.error(err));
+    if (token) {
+      let data = {
+        title: e.target.title.value,
+        description: e.target.description.value,
+        text: convertToHTML(editorState.getCurrentContent()),
+        category_id: e.target.category.value,
+        user_uuid: token.substr(36, 36),
+      };
+      fetch(`${context.BACKEND}/app/article`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: token,
+        },
+        body: JSON.stringify(data),
+      }).catch((err) => console.error(err));
+    } else {
+      getToMainPage();
+    }
   }
   return (
     <>
@@ -160,9 +161,11 @@ export default function creator() {
             <Label htmlFor="category">Category Name: </Label>
             <Select name="category">
               {categories &&
-                categories.map((category, i) => 
-                  <option key={i} value={category.id}>{category.name}</option>
-                )}
+                categories.map((category, i) => (
+                  <option key={i} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
             </Select>
           </FormTagsContainer>
           <FormTagsContainer>

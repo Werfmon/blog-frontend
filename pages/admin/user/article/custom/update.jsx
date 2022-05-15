@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import {
-  EditorState,
-} from "draft-js";
 import styled from "styled-components";
 import { isLogged } from "../../../../../utils/isLogged";
 import { getToMainPage } from "../../../../../utils/getToMainPage";
 import { Context } from "../../../../index";
+import { EditorState, ContentState, convertFromHTML } from "draft-js";
+import { convertToHTML } from "draft-convert";
+
 const EditorWysiwyg = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
   {
@@ -69,6 +69,7 @@ const ShareButton = styled.button`
   border-radius: 8px;
   color: #ffffff;
   font-size: 1rem;
+  cursor: pointer;
 `;
 const ShareButtonContaineer = styled.div`
   width: calc(80% + 8rem);
@@ -86,7 +87,6 @@ const Select = styled.select`
   & > option {
     color: #fff;
     background: #000;
-
   }
   &:focus {
     border-color: #ffffff80;
@@ -101,84 +101,94 @@ export default function update() {
   const context = useContext(Context);
   useEffect(() => {
     const token = isLogged();
-    if(token) {
-
+    if (token) {
       fetch(`${context.BACKEND}/app/category/all`, {
         headers: {
           authorization: token,
         },
       })
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data.data)
-      })
-      .catch((err) => console.error(err));
+        .then((res) => res.json())
+        .then((data) => {
+          setCategories(data.data);
+        })
+        .catch((err) => console.error(err));
     } else {
       getToMainPage();
     }
   }, []);
   useEffect(() => {
     const token = isLogged();
-    if(token) {
-      userUuid = token.substr(36, 36);
-      articleUuid = location.search.replace('?article-uuid=', '');
-      fetch(`${context.BACKEND}/app/article/${articleUuid}/${userUuid}`, {
+    if (token) {
+      const articleUuid = location.search.replace("?article-uuid=", "");
+      fetch(`${context.BACKEND}/app/article/${articleUuid}`, {
         headers: {
           authorization: token,
         },
       })
-      .then((res) => res.json())
-      .then((data) => {
-        setArticle(data.data)
-        console.log(data.data);
-      })
-      .catch((err) => console.error(err));
+        .then((res) => res.json())
+        .then((data) => {
+          setArticle(data.data);
+          setEditorState(
+            EditorState.createWithContent(
+              ContentState.createFromBlockArray(convertFromHTML(data.data.text))
+            )
+          );
+        })
+        .catch((err) => console.error(err));
     } else {
       getToMainPage();
     }
   }, []);
-  
 
-//   function createArticle(e) {
-//     e.preventDefault();
-//     const token = isLogged();
-//     let data = {
-//       title: e.target.title.value,
-//       description: e.target.description.value,
-//       text: convertToHTML(editorState.getCurrentContent()),
-//       category_id: e.target.category.value,
-//       user_uuid: token.substr(36, 36)
-//     };
-//     console.log(data);
-//    fetch(`${context.BACKEND}/app/article`, {
-//      method: 'POST',
-//      headers: {
-//        'content-type': 'application/json',
-//        authorization: token
-//      },
-//      body: JSON.stringify(data)
-//    }).catch(err => console.error(err));
-//   }
+  function updateArticle(e) {
+    e.preventDefault();
+    const token = isLogged();
+    if (token) {
+      const articleUuid = location.search.replace("?article-uuid=", "");
+      let data = {
+        title: e.target.title.value,
+        description: e.target.description.value,
+        text: convertToHTML(editorState.getCurrentContent()),
+        category_id: e.target.category.value,
+      };
+      fetch(`${context.BACKEND}/app/article/${articleUuid}`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          authorization: token,
+        },
+        body: JSON.stringify(data),
+      }).catch((err) => console.error(err));
+    } else {
+        getToMainPage();
+    }
+  }
   return (
     <>
-      <ArticleHeader>Article Creator</ArticleHeader>
+      <ArticleHeader>Article Update</ArticleHeader>
       <Main>
-        <Form>
+        <Form onSubmit={updateArticle}>
           <FormTagsContainer>
             <Label htmlFor="title">Article Name: </Label>
-            <Input type="text" name="title" />
+            <Input value={article && article.title} type="text" name="title" />
           </FormTagsContainer>
           <FormTagsContainer>
             <Label htmlFor="description">Description</Label>
-            <Textarea name="description" maxLength={100}></Textarea>
+            <Textarea
+              value={article && article.description}
+              name="description"
+              maxLength={100}
+            ></Textarea>
           </FormTagsContainer>
           <FormTagsContainer>
             <Label htmlFor="category">Category Name: </Label>
-            <Select name="category">
+            <Select value={article && article.category_id} name="category">
               {categories &&
-                categories.map((category, i) => 
-                  <option key={i} value={category.id}>{category.name}</option>
-                )}
+                categories.map((category, i) => (
+                  <option key={i} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
             </Select>
           </FormTagsContainer>
           <FormTagsContainer>
