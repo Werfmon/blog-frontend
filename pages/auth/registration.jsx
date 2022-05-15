@@ -73,6 +73,7 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  flex-direction: row-reverse;
 `;
 const TextButton = styled.button`
   align-self: start;
@@ -148,8 +149,8 @@ export default function registration() {
           <Input type='password' name="password" placeholder="Password" required minLength={12}/>
           <Input type='password' name="passwordAgain" placeholder="Password again" required minLength={12}/>
           <ButtonContainer>
-            <TextButton onClick={getToLoginPage}>Login</TextButton>
             <Button>Register</Button>
+            <TextButton onClick={getToLoginPage}>Login</TextButton>
           </ButtonContainer>
         </Form>
       </Card>

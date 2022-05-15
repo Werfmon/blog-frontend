@@ -68,6 +68,7 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  flex-direction: row-reverse;
 `
 const HeadCard = styled.div`
   padding: 20px 0 32px 20px;
@@ -112,8 +113,8 @@ export default function login() {
           <Input type='email' name="email" placeholder='E-mail' />
           <Input type='password' name="password" placeholder='Password'/>
           <ButtonContainer>
-            <TextButton onClick={getToRegistrationPage}>Not registered?</TextButton>
             <Button>Login</Button>
+            <TextButton onClick={getToRegistrationPage}>Not registered?</TextButton>
           </ButtonContainer>
         </Form>
       </Card>
