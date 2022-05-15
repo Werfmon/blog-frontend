@@ -5,6 +5,7 @@ import { Context } from "../../../index";
 import AdminNavbar from "../../../../Components/Admin/AdminNavbar";
 import { isLogged } from "../../../../utils/isLogged";
 import ArticleCard from "../../../../Components/ArticleCard";
+import { getToMainPage } from "../../../../utils/getToMainPage";
 
 const Main = styled.main`
   margin: 0 auto;
@@ -30,7 +31,11 @@ export default function saved() {
   const content = useContext(Context);
   const [reload, setReload] = useState(false);
   const [likedArticles, setLikedArticles] = useState([]);
-
+  useEffect(() => {
+    if(!isLogged()) {
+      getToMainPage();
+    }
+  }, [])
   useEffect(() => {
     const token = isLogged();
     if (token) {

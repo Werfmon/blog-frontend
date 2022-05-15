@@ -5,6 +5,7 @@ import { Context } from "../../../index";
 import AdminNavbar from "../../../../Components/Admin/AdminNavbar";
 import { isLogged } from "../../../../utils/isLogged";
 import ArticleCard from "../../../../Components/ArticleCard";
+import { getToMainPage } from "../../../../utils/getToMainPage";
 
 const Main = styled.main`
   margin: 0 auto;
@@ -44,6 +45,8 @@ export default function saved() {
         .then((data) => {
           setSavedArticles(data.data);
         });
+    } else {
+      getToMainPage();
     }
   }, [, reload]);
   return (

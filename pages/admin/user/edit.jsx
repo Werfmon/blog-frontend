@@ -6,6 +6,9 @@ import { Context } from "../../index";
 
 import AdminNavbar from "../../../Components/Admin/AdminNavbar";
 import { isLogged } from "../../../utils/isLogged";
+import { logout } from "../../../utils/logout";
+import { getToMainPage } from "../../../utils/getToMainPage";
+
 
 const Main = styled.main`
   margin: 0 auto;
@@ -94,6 +97,7 @@ export default function edit() {
   const context = useContext(Context);
   const [roles, setRoles] = useState(null);
   const [oldUserData, setOldUserData] = useState(null);
+  const [email, setEmail] = useState(null)
   useEffect(() => {
     fetch(`${context.BACKEND}/api/role/all`)
       .then((res) => res.json())
@@ -102,17 +106,23 @@ export default function edit() {
   }, []);
   useEffect(() => {
     const token = isLogged();
-    const userUuid = token.substr(36, 36);
-    fetch(`${context.BACKEND}/app/user/info/${userUuid}`, {
-      headers: {
-        authorization: token,
-      },
-    })
+    if(token) {
+      const userUuid = token.substr(36, 36);
+      fetch(`${context.BACKEND}/app/user/info/${userUuid}`, {
+        headers: {
+          authorization: token,
+        },
+      })
       .then((res) => res.json())
       .then((data) => {
         setOldUserData(data.data);
+        setEmail(data.data.user_email);
       })
       .catch((err) => console.error(err));
+    }
+    else {
+      getToMainPage();
+    }
   }, []);
 
   function updateUser(e) {
@@ -141,17 +151,47 @@ export default function edit() {
   function updatePassword(e) {
     e.preventDefault();
     const token = isLogged();
-    const userUuid = token.substr(36, 36);
     if(e.target.newPassword.value === e.target.newPasswordAgain.value) {
       Email.send({
         SecureToken: process.env.NEXT_PUBLIC_SECRET_KEY,
-        To: "d.vyroubal.w@gmail.com",
+        To: email,
         From: "proenix.blog@gmail.com",
         Subject: "Password Update",
         Body: `<h3>Click to link below for update</h3>\n
-        <a href='${context.BACKEND}/api/user/${userUuid}/password?password=${e.target.newPassword.value}&current=${e.target.password.value}&token=${token}'>Click here for update</a>
+        <a href='${context.BACKEND}/api/user/password?password=${e.target.newPassword.value}&current=${e.target.password.value}&token=${token}'>Click here for update</a>
         `,
       }).then((message) => alert(message));
+    }
+  }
+  function deleteAccount(e) {
+    e.preventDefault();
+    const token = isLogged();
+
+    let deleteArticles = false;
+    deleteArticles = confirm("Do you want delete also articles?");
+    
+    const textToType = 'proenix/' + email
+    const verifyText = prompt("For delete profile type:\n" + textToType);
+
+    if(verifyText === textToType) {
+      console.log(e.target.password.value);
+      const userUuid = token.substr(36, 36);
+      fetch(`${context.BACKEND}/app/user/${userUuid}?delete-articles=${deleteArticles}`, {
+        method: "DELETE",
+        headers: {
+          'content-type': 'application/json',
+          authorization: token
+        },
+        body: JSON.stringify({password: e.target.password.value.toString()}),
+      }).then(res => {
+        if(res.ok) {
+          logout();
+          alert('Account deleted\nBye :/');
+        }
+        else {
+          alert('Probably wrong password :)')
+        }
+      }).catch(err => console.error(err));
     }
   }
   return (
@@ -250,7 +290,7 @@ export default function edit() {
             <HeadCard>
               <Title>Delete Account</Title>
             </HeadCard>
-            <Form>
+            <Form onSubmit={deleteAccount}>
               <Input
                 type="password"
                 name="password"

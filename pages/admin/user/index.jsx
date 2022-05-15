@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,8 @@ import { goToBookmarkedArticle } from "../../../utils/goToBookmarkedArticle";
 import { goToEditUser } from "../../../utils/goToEditUser";
 import { goToLikedArticle } from "../../../utils/goToLikedArticle";
 import { goToArticleOverview } from "../../../utils/goToArticleOverview";
+import { isLogged } from "../../../utils/isLogged";
+import { getToMainPage } from "../../../utils/getToMainPage";
 
 const Main = styled.main`
   display: flex;
@@ -38,6 +40,11 @@ const Header = styled.header`
   }
 `;
 export default function index() {
+  useEffect(() => {
+    if(!isLogged()) {
+      getToMainPage();
+    }
+  }, [])
   return (
     <>
       <Header>

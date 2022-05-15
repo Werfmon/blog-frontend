@@ -11,6 +11,7 @@ import styled from "styled-components";
 import convertFromHTMLToContentBlocks from "draft-js/lib/convertFromHTMLToContentBlocks";
 import { Context } from "../../index";
 import { isLogged } from "../../../utils/isLogged";
+import { getToMainPage } from "../../../utils/getToMainPage";
 const EditorWysiwyg = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
   {
@@ -104,16 +105,21 @@ export default function creator() {
   const context = useContext(Context);
   useEffect(() => {
     const token = isLogged();
-    fetch(`${context.BACKEND}/app/category/all`, {
-      headers: {
-        authorization: token,
-      },
-    })
+    if(token) {
+
+      fetch(`${context.BACKEND}/app/category/all`, {
+        headers: {
+          authorization: token,
+        },
+      })
       .then((res) => res.json())
       .then((data) => {
         setCategories(data.data)
       })
       .catch((err) => console.error(err));
+    } else {
+      getToMainPage();
+    }
   }, []);
   
 
