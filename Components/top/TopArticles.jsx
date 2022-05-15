@@ -49,7 +49,9 @@ const Loading = styled.div`
     }
   }
 `;
-
+const ShowParagraph = styled.p`
+color: #fff;
+`
 export default function TopArticles() {
   const [topArticle, setTopArticle] = useState(null);
   const COUNT_ARTICLE = 6;
@@ -67,7 +69,9 @@ export default function TopArticles() {
     <Container>
       <Title>Top Articles</Title>
       <CardContainer>
-        {topArticle ? (
+        {topArticle === null ? (
+          <Loading></Loading>
+        ) : topArticle.length > 0 ? (
           <>
             <CardContainerRow>
               {topArticle[0] && <ArticleCard article={topArticle[0]} />}
@@ -75,13 +79,13 @@ export default function TopArticles() {
               {topArticle[2] && <ArticleCard article={topArticle[2]} />}
             </CardContainerRow>
             <CardContainerRow>
-              {topArticle[0] && <ArticleCard article={topArticle[0]} />}
-              {topArticle[1] && <ArticleCard article={topArticle[1]} />}
-              {topArticle[2] && <ArticleCard article={topArticle[2]} />}
+              {topArticle[3] && <ArticleCard article={topArticle[3]} />}
+              {topArticle[4] && <ArticleCard article={topArticle[4]} />}
+              {topArticle[5] && <ArticleCard article={topArticle[5]} />}
             </CardContainerRow>
           </>
         ) : (
-          <Loading></Loading>
+          <ShowParagraph>Nothing to show</ShowParagraph>
         )}
       </CardContainer>
     </Container>
