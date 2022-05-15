@@ -30,19 +30,7 @@ const Title = styled.h2`
   color: #fff;
   font-weight: 100;
 `;
-const Input = styled.input`
-  background: #12131bb5;
-  border: 2px solid #ffffff44;
-  width: 100%;
-  border-radius: 20px;
-  height: 2rem;
-  color: #fff;
-  padding-left: 12px;
-  transition: all 0.4s;
-  &:focus {
-    border-color: #ffffff80;
-  }
-`;
+
 const Select = styled.select`
   background: #12131bb5;
   width: 100%;

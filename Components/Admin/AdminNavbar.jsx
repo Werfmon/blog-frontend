@@ -7,20 +7,22 @@ import {
   faUser,
   faHeart,
   faPenToSquare,
+  faArrowLeft
 } from "@fortawesome/free-solid-svg-icons";
 
 import { goToArticleOverview } from "../../utils/goToArticleOverview";
 import { goToLikedArticle } from "../../utils/goToLikedArticle";
 import { goToBookmarkedArticle } from "../../utils/goToBookmarkedArticle";
 import { goToEditUser } from "../../utils/goToEditUser";
+import { getToMainPage } from "../../utils/getToMainPage";
 
 const Nav = styled.nav`
   transform: translateY(-50%);
   left: 0;
   top: 50%;
   position: absolute;
-  height: 15rem;
   width: 2.6rem;
+  padding-block: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,6 +63,9 @@ export default function AdminNavbar() {
         </IconFrame>
         <IconFrame onClick={goToBookmarkedArticle}>
           <FontAwesomeIcon color="#fffffff8" size="1x" icon={faBookmark} />
+        </IconFrame>
+        <IconFrame onClick={getToMainPage}>
+          <FontAwesomeIcon color="#fffffff8" size="1x" icon={faArrowLeft} />
         </IconFrame>
     </Nav>
   );
