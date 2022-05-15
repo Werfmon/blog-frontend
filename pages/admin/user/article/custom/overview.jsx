@@ -5,6 +5,7 @@ import { Context } from "../../../../index";
 import AdminNavbar from "../../../../../Components/Admin/AdminNavbar";
 import { getToMainPage } from "../../../../../utils/getToMainPage";
 import { isLogged } from "../../../../../utils/isLogged";
+import { goToUpdateArticle } from "../../../../../utils/goToUpdateArticle";
 
 const Main = styled.main`
   margin: 0 auto;
@@ -120,12 +121,22 @@ export default function overview() {
       }).catch(err => console.error(err));
     }
   }
-
+  function updateArticle(e) {
+    e.preventDefault()
+    const token = isLogged();
+    if(token) {
+      const articleUuid = e.target.article.value;
+      goToUpdateArticle(articleUuid);
+    }
+    else {
+      getToMainPage();
+    }
+  }
   return (
     <>
       <AdminNavbar />
       <Header>
-        <h1>Edit Profile</h1>
+        <h1>Edit Articles</h1>
       </Header>
       <Main>
         <CardConteiner>
@@ -140,6 +151,20 @@ export default function overview() {
               </Select>
               <ButtonContainer>
                 <Button>Delete</Button>
+              </ButtonContainer>
+            </Form>
+          </Card>
+          <Card>
+            <HeadCard>
+              <Title>Update Article</Title>
+            </HeadCard>
+            <Form onSubmit={updateArticle}>
+              <Select name="article">
+              <option>-</option>
+                {articles && articles.map((article, i) => <option key={i} value={article.uuid}>{article.name}</option>)}
+              </Select>
+              <ButtonContainer>
+                <Button>Update</Button>
               </ButtonContainer>
             </Form>
           </Card>
