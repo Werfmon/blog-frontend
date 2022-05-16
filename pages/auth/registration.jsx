@@ -1,9 +1,9 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import BackButton from "../../Components/BackButton";
 import { getToLoginPage } from "../../utils/getToLoginPage";
 import { getToMainPage } from "../../utils/getToMainPage";
-import {Context} from '../index';
+import { Context } from "../index";
 
 const Card = styled.div`
   margin: 0 auto;
@@ -95,10 +95,13 @@ export default function registration() {
 
   useEffect(() => {
     fetch(`${context.BACKEND}/api/role/all`)
-      .then(res => res.json())
-      .then(data => setRoles(data.data))
-      .catch(err => console.error(err))
-  }, [])
+      .then((res) => res.json())
+      .then((data) => {
+        setRoles(data.data);
+        console.log(data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   function register(e) {
     e.preventDefault();
@@ -111,20 +114,22 @@ export default function registration() {
       sex: e.target.sex.value,
       password: e.target.password.value,
       passwordAgain: e.target.passwordAgain.value,
-    }
+    };
     console.log(data);
     fetch(`${context.BACKEND}/auth/registration`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
       },
-      body: JSON.stringify(data)
-    }).then(res => {
-      if(res.ok) {
-        alert('Registrace byla úspěšná');
-      }
-      else return res.json();
-    }).then(data => alert(data.data)).catch(err => console.error(err));
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (res.ok) {
+          alert("Registrace byla úspěšná");
+        } else return res.json();
+      })
+      .then((data) => alert(data.data))
+      .catch((err) => console.error(err));
   }
 
   return (
@@ -135,19 +140,36 @@ export default function registration() {
           <BackButton action={getToMainPage} />
         </HeadCard>
         <Form onSubmit={register}>
-          <Input type='text' name="name" placeholder="Fist name" required />
-          <Input type='text' name="surname" placeholder="last name" required />
-          <Input type='email' name="email" placeholder="E-mail" required />
+          <Input type="text" name="name" placeholder="Fist name" required />
+          <Input type="text" name="surname" placeholder="last name" required />
+          <Input type="email" name="email" placeholder="E-mail" required />
           <Select name="role" required>
-            {roles && roles.map((role, i) => <option key={i} value={role.id}>{role.name}</option>)}            
+            {roles &&
+              roles.map((role, i) => (
+                <option key={i} value={role.id}>
+                  {role.name}
+                </option>
+              ))}
           </Select>
           <Select name="sex" required>
-            <option value='man'>Man</option>
-            <option value='woman'>Woman</option>
-            <option value='other'>Other...</option>
+            <option value="man">Man</option>
+            <option value="woman">Woman</option>
+            <option value="other">Other...</option>
           </Select>
-          <Input type='password' name="password" placeholder="Password" required minLength={12}/>
-          <Input type='password' name="passwordAgain" placeholder="Password again" required minLength={12}/>
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            minLength={12}
+          />
+          <Input
+            type="password"
+            name="passwordAgain"
+            placeholder="Password again"
+            required
+            minLength={12}
+          />
           <ButtonContainer>
             <Button>Register</Button>
             <TextButton onClick={getToLoginPage}>Login</TextButton>

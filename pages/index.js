@@ -6,7 +6,7 @@ import ExploreMore from "../Components/ExploreMore";
 import { createContext } from "react";
 
 export const Context = createContext({
-  BACKEND: 'http://localhost:8080'
+  BACKEND: process.env.NEXT_PUBLIC_API
 });
 
 const Header = styled.header`
@@ -31,7 +31,7 @@ const Span = styled.span`
 
 export default function Home() {
   return (
-    <Context.Provider value={{BACKEND: 'http://localhost:8080'}}>
+    <Context.Provider value={{BACKEND: process.env.NEXT_PUBLIC_API}}>
       <Header>
       <HeaderSvgBlob />
         <NavBar />
