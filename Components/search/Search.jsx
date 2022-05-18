@@ -15,6 +15,12 @@ const Form = styled.form`
   gap: 1rem;
   z-index: 2;
   position: relative;
+  @media screen and (max-width: 600px) {
+    gap: 0;
+  }
+  @media screen and (max-width: 500px) and (min-width: 0) {
+   
+  }
 `;
 const Input = styled.input`
   border-radius: 50px;
@@ -36,6 +42,20 @@ const Input = styled.input`
   &:focus {
     border-color: #0505dbfd;
   }
+  @media screen and (max-width: 600px) {
+    width: 7rem;
+    font-size: 1.4rem;
+    height: 2rem;
+    &::placeholder{
+      font-size: 1rem;
+
+    }
+  }
+  @media screen and (max-width: 500px) and (min-width: 0) {
+   width: 90%;
+   min-width: unset;
+  }
+
 `;
 const CardContainer = styled.div`
   display: flex;

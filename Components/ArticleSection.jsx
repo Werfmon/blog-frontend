@@ -29,6 +29,7 @@ const Section = styled.section`
 const ArticleText = styled.p`
   padding-top: 3rem;
   font-weight: 600;
+  word-break: break-word;
 `;
 const FrameContainer = styled.div`
   display: flex;
@@ -55,11 +56,14 @@ const HeaderContainer = styled.div``;
 const ArticleName = styled.h1`
   font-weight: 900;
   font-size: 2.8rem;
+  word-break: break-word;
 `;
 const Description = styled.h2`
   font-size: 1rem;
   padding: 10px 4px;
   font-weight: 400;
+  word-break: break-word;
+
 `;
 
 export default function ArticleSection({ articleData }) {

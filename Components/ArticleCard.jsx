@@ -8,8 +8,12 @@ import { Context } from "../pages";
 import { isLogged } from "../utils/isLogged";
 
 const Card = styled.div`
+@media screen and (max-width: 450px) {
+    min-width: 80vw;
+    margin-left: 40px;
+  }
   position: relative;
-  height: 12rem;
+  min-height: 12rem;
   max-width: 28rem;
   min-width: 23rem;
   width: 36vw;
@@ -34,11 +38,17 @@ const CardClick = styled.div`
 `;
 const Title = styled.h3`
   margin-bottom: 0.4rem;
+  word-break: break-word;
 `;
 const Description = styled.p`
   color: #fffafa57;
+  word-break: break-word;
 `;
 const FrameContainer = styled.div`
+@media screen and (max-width: 450px) {
+    position: static;
+    margin-top: 10px;
+  }
   display: flex;
   gap: 1rem;
   position: absolute;
@@ -50,6 +60,9 @@ const FrameChild = styled.div`
 `;
 const FrameAuthorRole = styled.p`
   color: #fffafa57;
+  @media screen and (max-width: 450px) {
+    display: none;
+  }
 `;
 const TitleContainer = styled.div`
   display: flex;

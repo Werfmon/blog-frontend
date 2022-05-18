@@ -71,7 +71,7 @@ export default function TopArticles() {
       <CardContainer>
         {topArticle === null ? (
           <Loading></Loading>
-        ) : topArticle.length > 0 ? (
+        ) : topArticle?.length > 0 ? (
           <>
             <CardContainerRow>
               {topArticle[0] && <ArticleCard article={topArticle[0]} />}

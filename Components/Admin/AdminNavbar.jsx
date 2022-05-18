@@ -19,6 +19,7 @@ import { getToMainPage } from "../../utils/getToMainPage";
 const Nav = styled.nav`
   transform: translateY(-50%);
   left: 0;
+  z-index: 50;
   top: 50%;
   position: absolute;
   width: 2.6rem;

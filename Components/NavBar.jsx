@@ -62,12 +62,13 @@ cursor: pointer;
 
 export default function NavBar() {
   const [userLogged, setUserLogged] = useState(false);
+  const context = useContext(Context);
   
   useEffect(() => {
     let token = isLogged();
     if(token !== false){
       let uuid = token.substr(36, 36);
-      fetch("http://localhost:8080/app/user/" + uuid, {
+      fetch(`${context.BACKEND}/app/user/${uuid}`, {
         method: "GET",
         headers: {
           'Authorization': token,

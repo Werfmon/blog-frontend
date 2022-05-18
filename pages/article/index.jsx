@@ -84,7 +84,7 @@ export default function Index() {
         setArticle(data.data);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [, context]);
   function copyLink() {
     navigator.clipboard.writeText(location.href);
   }

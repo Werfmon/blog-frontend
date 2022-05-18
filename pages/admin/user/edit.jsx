@@ -29,6 +29,10 @@ const Card = styled.div`
   background-color: #12131b;
   border-radius: 30px;
   padding-bottom: 40px;
+  @media screen and (max-width: 450px) {
+    min-width: 80vw;
+    margin-left: 40px;
+  }
 `;
 
 const Title = styled.h2`
@@ -139,7 +143,7 @@ export default function Edit() {
       role: parseInt(e.target.role.value),
       sex: e.target.sex.value,
     };
-    console.log(data, userUuid);
+    
     fetch(`${context.BACKEND}/app/user/${userUuid}`, {
       method: "PUT",
       headers: {
