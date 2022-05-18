@@ -104,7 +104,7 @@ export default function Overview() {
       .then(data => setArticles(data.data))
       .catch(err => console.error(err));
 
-  }, []);
+  }, [, context]);
 
   function deleteArticle(e) {
     e.preventDefault();

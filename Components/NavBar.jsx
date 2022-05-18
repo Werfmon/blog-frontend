@@ -80,7 +80,7 @@ export default function NavBar() {
       })
       .catch(err => console.error(err));
     }
-  }, []);
+  }, [, context]);
 
   return (
     <Nav>

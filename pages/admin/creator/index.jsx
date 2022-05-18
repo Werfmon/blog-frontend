@@ -119,7 +119,7 @@ export default function Index() {
     } else {
       getToMainPage();
     }
-  }, []);
+  }, [, context]);
 
   function createArticle(e) {
     e.preventDefault();

@@ -28,7 +28,7 @@ const SavedParagraph = styled.p`
 `;
 
 export default function Saved() {
-  const content = useContext(Context);
+  const context = useContext(Context);
   const [savedArticles, setSavedArticles] = useState([]);
   const [reload, setReload] = useState(false);
 
@@ -36,7 +36,7 @@ export default function Saved() {
     const token = isLogged();
     if (token) {
       const userUuid = token.substr(36, 36);
-      fetch(`${content.BACKEND}/app/user/article/saved?uuid=${userUuid}`, {
+      fetch(`${context.BACKEND}/app/user/article/saved?uuid=${userUuid}`, {
         headers: {
           Authorization: token,
         },
@@ -48,7 +48,7 @@ export default function Saved() {
     } else {
       getToMainPage();
     }
-  }, [, reload]);
+  }, [, reload, context]);
   return (
     <>
       <AdminNavbar />

@@ -64,7 +64,7 @@ export default function TopArticles() {
         setTopArticle(data.data);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [, context]);
   return (
     <Container>
       <Title>Top Articles</Title>

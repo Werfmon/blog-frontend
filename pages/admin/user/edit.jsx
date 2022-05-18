@@ -108,7 +108,7 @@ export default function Edit() {
       .then((res) => res.json())
       .then((data) => setRoles(data.data))
       .catch((err) => console.error(err));
-  }, []);
+  }, [, context]);
   useEffect(() => {
     const token = isLogged();
     if(token) {
@@ -128,7 +128,7 @@ export default function Edit() {
     else {
       getToMainPage();
     }
-  }, []);
+  }, [, context]);
 
   function updateUser(e) {
     e.preventDefault();

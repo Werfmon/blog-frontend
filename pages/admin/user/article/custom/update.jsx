@@ -115,7 +115,7 @@ export default function Update() {
     } else {
       getToMainPage();
     }
-  }, []);
+  }, [, context]);
   useEffect(() => {
     const token = isLogged();
     if (token) {
@@ -138,7 +138,7 @@ export default function Update() {
     } else {
       getToMainPage();
     }
-  }, []);
+  }, [, context]);
 
   function updateArticle(e) {
     e.preventDefault();

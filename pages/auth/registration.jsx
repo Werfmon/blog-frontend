@@ -101,7 +101,7 @@ export default function Registration() {
         console.log(data);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [, context]);
 
   function register(e) {
     e.preventDefault();

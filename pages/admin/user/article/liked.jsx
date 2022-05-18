@@ -28,19 +28,15 @@ const LikedParagraph = styled.p`
 `;
 
 export default function Liked() {
-  const content = useContext(Context);
+  const context = useContext(Context);
   const [reload, setReload] = useState(false);
   const [likedArticles, setLikedArticles] = useState([]);
-  useEffect(() => {
-    if(!isLogged()) {
-      getToMainPage();
-    }
-  }, [])
+  
   useEffect(() => {
     const token = isLogged();
     if (token) {
       const userUuid = token.substr(36, 36);
-      fetch(`${content.BACKEND}/app/user/article/liked?uuid=${userUuid}`, {
+      fetch(`${context.BACKEND}/app/user/article/liked?uuid=${userUuid}`, {
         headers: {
           Authorization: token,
         },
@@ -48,8 +44,10 @@ export default function Liked() {
         .then((res) => res.json())
         .then((data) => setLikedArticles(data.data))
         .catch(err => console.error(err));
+    } else{
+      getToMainPage();
     }
-  }, [, reload]);
+  }, [, reload, context]);
   return (
     <>
       <AdminNavbar />
