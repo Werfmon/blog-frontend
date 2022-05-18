@@ -78,7 +78,7 @@ const CardConteiner = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
-export default function overview() {
+export default function Overview() {
   const context = useContext(Context);
   const [articles, setArticles] = useState([]);
 

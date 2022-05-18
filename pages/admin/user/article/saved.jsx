@@ -27,7 +27,7 @@ const SavedParagraph = styled.p`
   left: 50%;
 `;
 
-export default function saved() {
+export default function Saved() {
   const content = useContext(Context);
   const [savedArticles, setSavedArticles] = useState([]);
   const [reload, setReload] = useState(false);

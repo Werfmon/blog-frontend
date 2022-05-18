@@ -64,7 +64,7 @@ export default function Search() {
         <FindButton text="Find" />
       </Form>
       <CardContainer>
-        {articles && articles.map(article => <ArticleCard article={article} />)}
+        {articles && articles.map((article, i) => <ArticleCard key={i} article={article} />)}
       </CardContainer>
     </>
   );

@@ -89,7 +89,7 @@ const HeadCard = styled.div`
   padding: 20px 0 32px 20px;
 `;
 
-export default function registration() {
+export default function Registration() {
   const context = useContext(Context);
   const [roles, setRoles] = useState(null);
 

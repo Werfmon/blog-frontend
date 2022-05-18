@@ -92,7 +92,7 @@ const Select = styled.select`
     border-color: #ffffff80;
   }
 `;
-export default function update() {
+export default function Update() {
   const [categories, setCategories] = useState(null);
   const [article, setArticle] = useState(null);
   const [editorState, setEditorState] = useState(() =>

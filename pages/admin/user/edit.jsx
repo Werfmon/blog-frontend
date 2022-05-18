@@ -8,6 +8,7 @@ import AdminNavbar from "../../../Components/Admin/AdminNavbar";
 import { isLogged } from "../../../utils/isLogged";
 import { logout } from "../../../utils/logout";
 import { getToMainPage } from "../../../utils/getToMainPage";
+import Script from "next/script";
 
 
 const Main = styled.main`
@@ -93,7 +94,7 @@ const CardConteiner = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
-export default function edit() {
+export default function Edit() {
   const context = useContext(Context);
   const [roles, setRoles] = useState(null);
   const [oldUserData, setOldUserData] = useState(null);
@@ -196,9 +197,7 @@ export default function edit() {
   }
   return (
     <>
-      <Head>
-        <script src="https://smtpjs.com/v3/smtp.js"></script>
-      </Head>
+      <Script src="https://smtpjs.com/v3/smtp.js"></Script>
       <AdminNavbar />
       <Header>
         <h1>Edit Profile</h1>

@@ -29,7 +29,7 @@ const Span = styled.span`
   color: ${(props) => props.color};
 `;
 
-export default function Home() {
+export default function Index() {
   return (
     <Context.Provider value={{BACKEND: process.env.NEXT_PUBLIC_API}}>
       <Header>

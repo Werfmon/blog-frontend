@@ -73,7 +73,7 @@ const ButtonContainer = styled.div`
 const HeadCard = styled.div`
   padding: 20px 0 32px 20px;
 `;
-export default function login() {
+export default function Login() {
   const context = useContext(Context);
   function login(e) {
 

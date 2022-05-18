@@ -68,7 +68,7 @@ const ShareIcon = styled.button`
     z-index: 10;
   }
 `;
-export default function article() {
+export default function Index() {
   const [article, setArticle] = useState(null);
   const [logged, setLogged] = useState(false);
   const context = useContext(Context);

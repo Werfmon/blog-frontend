@@ -97,7 +97,7 @@ const Select = styled.select`
     border-color: #ffffff80;
   }
 `;
-export default function creator() {
+export default function Index() {
   const [categories, setCategories] = useState(null);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()

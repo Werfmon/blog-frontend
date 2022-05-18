@@ -27,7 +27,7 @@ const LikedParagraph = styled.p`
   left: 50%;
 `;
 
-export default function saved() {
+export default function Liked() {
   const content = useContext(Context);
   const [reload, setReload] = useState(false);
   const [likedArticles, setLikedArticles] = useState([]);

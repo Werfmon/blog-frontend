@@ -39,7 +39,7 @@ const Header = styled.header`
     font-size: 4rem;
   }
 `;
-export default function index() {
+export default function Index() {
   useEffect(() => {
     if(!isLogged()) {
       getToMainPage();
