@@ -57,7 +57,7 @@ export default function TopArticles() {
   const COUNT_ARTICLE = 6;
   const context = useContext(Context);
   useEffect(() => {
-    fetch(`${context.BACKEND}/api/article-top?top=${COUNT_ARTICLE}`)
+    fetch(`http://blogapi.thredex.eu/api/article-top?top=${COUNT_ARTICLE}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data.data);
