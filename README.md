@@ -12,4 +12,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 or
 
-Open [http://blog.thredex.eu/](blog.thredex.eu) as http :D
+Open [http://blog.thredex.eu/](http://blog.thredex.eu/) as http :D
