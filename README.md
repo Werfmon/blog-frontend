@@ -12,4 +12,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 or
 
-Open [http://blog.thredex.eu/](http://blog.thredex.eu/) as http :D
+Open [blog.thredex.eu](http://blog.thredex.eu/) as http :D
+
+API for this: [blogapi.thredex.eu](http://blogapi.thredex.eu/)
