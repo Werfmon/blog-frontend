@@ -12,6 +12,8 @@ import convertFromHTMLToContentBlocks from "draft-js/lib/convertFromHTMLToConten
 import { Context } from "../../index";
 import { isLogged } from "../../../utils/isLogged";
 import { getToMainPage } from "../../../utils/getToMainPage";
+import Head from "next/head";
+
 const EditorWysiwyg = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
   {

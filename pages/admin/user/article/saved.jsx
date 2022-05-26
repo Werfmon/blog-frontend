@@ -6,6 +6,8 @@ import AdminNavbar from "../../../../Components/Admin/AdminNavbar";
 import { isLogged } from "../../../../utils/isLogged";
 import ArticleCard from "../../../../Components/ArticleCard";
 import { getToMainPage } from "../../../../utils/getToMainPage";
+import Head from "next/head";
+
 
 const Main = styled.main`
   margin: 0 auto;

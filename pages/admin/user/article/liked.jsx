@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { Context } from "../../../index";
+import Head from "next/head";
+
 
 import AdminNavbar from "../../../../Components/Admin/AdminNavbar";
 import { isLogged } from "../../../../utils/isLogged";

@@ -4,6 +4,7 @@ import BackButton from "../../Components/BackButton";
 import { getToLoginPage } from "../../utils/getToLoginPage";
 import { getToMainPage } from "../../utils/getToMainPage";
 import { Context } from "../index";
+import Head from "next/head";
 
 const Card = styled.div`
   margin: 0 auto;

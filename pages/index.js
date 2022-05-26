@@ -4,6 +4,7 @@ import HeaderSvgBlob from "../Components/HeaderSvgBlob";
 import TopArticles from "../Components/top/TopArticles";
 import ExploreMore from "../Components/ExploreMore";
 import { createContext } from "react";
+import Head from "next/head";
 
 export const Context = createContext({
   BACKEND: "http://blogapi.thredex.eu",

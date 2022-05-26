@@ -5,6 +5,8 @@ import BackButton from "../../Components/BackButton";
 import { getToMainPage } from "../../utils/getToMainPage";
 import { getToRegistrationPage } from '../../utils/getToRegistrationPage';
 import {isLogged} from '../../utils/isLogged'
+import Head from "next/head";
+
 const Card = styled.div`
   margin: 0 auto;
   min-width: 25rem;

@@ -6,6 +6,7 @@ import { getToMainPage } from "../../../../../utils/getToMainPage";
 import { Context } from "../../../../index";
 import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { convertToHTML } from "draft-convert";
+import Head from "next/head";
 
 const EditorWysiwyg = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),

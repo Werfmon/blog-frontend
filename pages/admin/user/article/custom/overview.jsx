@@ -6,6 +6,7 @@ import AdminNavbar from "../../../../../Components/Admin/AdminNavbar";
 import { getToMainPage } from "../../../../../utils/getToMainPage";
 import { isLogged } from "../../../../../utils/isLogged";
 import { goToUpdateArticle } from "../../../../../utils/goToUpdateArticle";
+import Head from "next/head";
 
 const Main = styled.main`
   margin: 0 auto;
