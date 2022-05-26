@@ -139,7 +139,9 @@ export default function Index() {
           authorization: token,
         },
         body: JSON.stringify(data),
-      }).catch((err) => console.error(err));
+      })
+      .then(res => res.ok ? getToMainPage() : alert("Something went wrong"))
+      .catch((err) => console.error(err));
     } else {
       getToMainPage();
     }
