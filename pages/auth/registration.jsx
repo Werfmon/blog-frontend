@@ -115,7 +115,6 @@ export default function Registration() {
       password: e.target.password.value,
       passwordAgain: e.target.passwordAgain.value,
     };
-    console.log(data);
     fetch(`${context.BACKEND}/auth/registration`, {
       method: "POST",
       headers: {
@@ -125,11 +124,36 @@ export default function Registration() {
     })
       .then((res) => {
         if (res.ok) {
-          alert("Registrace byla úspěšná");
-        } else return res.json();
+          window.sessionStorage.setItem("token", data.data);
+          alert("Registration was successful");
+        } else alert("Registration error");
       })
       .then((data) => alert(data.data))
       .catch((err) => console.error(err));
+
+    data = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+
+    fetch(`${context.BACKEND}/auth/login`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        if (data) {
+          window.sessionStorage.setItem("token", data.data);
+        }
+        getToMainPage();
+      });
   }
 
   return (
