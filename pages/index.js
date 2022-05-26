@@ -34,7 +34,7 @@ export default function Index() {
   return (
     <>
       <Head>
-        <title>ProeniX - Admin</title>
+        <title>ProeniX</title>
       </Head>
       <Context.Provider value={{ BACKEND: "http://blogapi.thredex.eu" }}>
         <Header>
