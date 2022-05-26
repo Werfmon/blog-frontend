@@ -103,6 +103,10 @@ export default function Login() {
   }
 
   return (
+    <>
+    <Head>
+      <title>Proenix - Login</title>
+    </Head>
     <Container>
       <Card>
       <HeadCard>
@@ -119,5 +123,6 @@ export default function Login() {
         </Form>
       </Card>
     </Container>
+    </>
   );
 }

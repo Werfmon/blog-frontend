@@ -138,6 +138,9 @@ export default function Overview() {
   }
   return (
     <>
+      <Head>
+        <title>ProeniX - Admin</title>
+      </Head>
       <AdminNavbar />
       <Header>
         <h1>Edit Articles</h1>

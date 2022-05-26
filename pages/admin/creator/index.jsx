@@ -148,6 +148,9 @@ export default function Index() {
   }
   return (
     <>
+      <Head>
+        <title>Proenix</title>
+      </Head>
       <ArticleHeader>Article Creator</ArticleHeader>
       <Main>
         <Form onSubmit={createArticle}>

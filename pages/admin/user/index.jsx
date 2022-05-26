@@ -47,6 +47,9 @@ export default function Index() {
   }, [])
   return (
     <>
+      <Head>
+        <title>ProeniX - Admin</title>
+      </Head>
       <Header>
         <h1>Admin Panel</h1>
       </Header>

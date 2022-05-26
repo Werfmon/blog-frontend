@@ -201,6 +201,9 @@ export default function Edit() {
   }
   return (
     <>
+      <Head>
+        <title>ProeniX - Admin</title>
+      </Head>
       <Script src="https://smtpjs.com/v3/smtp.js"></Script>
       <AdminNavbar />
       <Header>

@@ -157,6 +157,10 @@ export default function Registration() {
   }
 
   return (
+    <>
+    <Head>
+      <title>Proenix - Registration</title>
+    </Head>
     <Container>
       <Card>
         <HeadCard>
@@ -201,5 +205,6 @@ export default function Registration() {
         </Form>
       </Card>
     </Container>
+    </>
   );
 }

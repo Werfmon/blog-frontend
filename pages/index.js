@@ -6,7 +6,7 @@ import ExploreMore from "../Components/ExploreMore";
 import { createContext } from "react";
 
 export const Context = createContext({
-  BACKEND: "http://blogapi.thredex.eu"
+  BACKEND: "http://blogapi.thredex.eu",
 });
 
 const Header = styled.header`
@@ -31,20 +31,25 @@ const Span = styled.span`
 
 export default function Index() {
   return (
-    <Context.Provider value={{BACKEND: "http://blogapi.thredex.eu"}}>
-      <Header>
-      <HeaderSvgBlob />
-        <NavBar />
-        <HeaderContainer>
-          <Text>
-            <Span color="#fff">Write. </Span>
-            <Span color="#7C7C7C">Read. </Span>
-            <Span color="#363636">Like.</Span>
-          </Text>
-        </HeaderContainer>
-      </Header>
-      <TopArticles />
-      <ExploreMore />
-    </Context.Provider>
+    <>
+      <Head>
+        <title>ProeniX - Admin</title>
+      </Head>
+      <Context.Provider value={{ BACKEND: "http://blogapi.thredex.eu" }}>
+        <Header>
+          <HeaderSvgBlob />
+          <NavBar />
+          <HeaderContainer>
+            <Text>
+              <Span color="#fff">Write. </Span>
+              <Span color="#7C7C7C">Read. </Span>
+              <Span color="#363636">Like.</Span>
+            </Text>
+          </HeaderContainer>
+        </Header>
+        <TopArticles />
+        <ExploreMore />
+      </Context.Provider>
+    </>
   );
 }

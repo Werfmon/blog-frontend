@@ -50,6 +50,9 @@ export default function Liked() {
   }, [, reload, context]);
   return (
     <>
+      <Head>
+        <title>ProeniX - Admin</title>
+      </Head>
       <AdminNavbar />
       <Header>
         <h1>Liked Articles</h1>

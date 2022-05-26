@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import ArticleSection from "../../Components/ArticleSection";
@@ -118,6 +119,9 @@ export default function Index() {
   }
   return (
     <>
+      <Head>
+        <title>Proenix</title>
+      </Head>
       <Main>
         <svg
           id="visual"

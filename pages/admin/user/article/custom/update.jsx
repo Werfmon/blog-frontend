@@ -165,6 +165,9 @@ export default function Update() {
   }
   return (
     <>
+      <Head>
+        <title>ProeniX - Admin</title>
+      </Head>
       <ArticleHeader>Article Update</ArticleHeader>
       <Main>
         <Form onSubmit={updateArticle}>

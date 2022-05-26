@@ -51,6 +51,9 @@ export default function Saved() {
   }, [, reload, context]);
   return (
     <>
+      <Head>
+        <title>ProeniX - Admin</title>
+      </Head>
       <AdminNavbar />
       <Header>
         <h1>Saved Articles</h1>
