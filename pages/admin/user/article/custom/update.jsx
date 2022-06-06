@@ -7,6 +7,7 @@ import { Context } from "../../../../index";
 import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { convertToHTML } from "draft-convert";
 import Head from "next/head";
+import { goToAdmin } from "../../../../../utils/goToAdmin";
 
 const EditorWysiwyg = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -99,6 +100,9 @@ export default function Update() {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  const [title, setTitle] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [categoryId, setCategoryId] = useState(null);
   const context = useContext(Context);
   useEffect(() => {
     const token = isLogged();
@@ -129,6 +133,9 @@ export default function Update() {
         .then((res) => res.json())
         .then((data) => {
           setArticle(data.data);
+          setCategoryId(data.data.category_id)
+          setDescription(data.data.description)
+          setTitle(data.data.title)
           setEditorState(
             EditorState.createWithContent(
               ContentState.createFromBlockArray(convertFromHTML(data.data.text))
@@ -145,13 +152,15 @@ export default function Update() {
     e.preventDefault();
     const token = isLogged();
     if (token) {
+
       const articleUuid = location.search.replace("?article-uuid=", "");
       let data = {
-        title: e.target.title.value,
-        description: e.target.description.value,
+        title: title,
+        description: description,
         text: convertToHTML(editorState.getCurrentContent()),
-        category_id: e.target.category.value,
+        category_id: categoryId
       };
+      console.log(data);
       fetch(`${context.BACKEND}/app/article/${articleUuid}`, {
         method: "PUT",
         headers: {
@@ -159,7 +168,9 @@ export default function Update() {
           authorization: token,
         },
         body: JSON.stringify(data),
-      }).catch((err) => console.error(err));
+      })
+      .then(res => res.ok && goToAdmin())
+      .catch((err) => console.error(err));
     } else {
         getToMainPage();
     }
@@ -174,19 +185,20 @@ export default function Update() {
         <Form onSubmit={updateArticle}>
           <FormTagsContainer>
             <Label htmlFor="title">Article Name: </Label>
-            <Input value={article && article.title} type="text" name="title" />
+            <Input onChange={e => setTitle(e.target.value)} defaultValue={title} type="text" name="title" />
           </FormTagsContainer>
           <FormTagsContainer>
             <Label htmlFor="description">Description</Label>
             <Textarea
-              value={article && article.description}
+              defaultValue={description}
+              onChange={e => setDescription(e.target.value)}
               name="description"
               maxLength={100}
             ></Textarea>
           </FormTagsContainer>
           <FormTagsContainer>
             <Label htmlFor="category">Category Name: </Label>
-            <Select value={article && article.category_id} name="category">
+            <Select defaultValue={categoryId} onChange={e => setCategoryId(e.target.value)} name="category">
               {categories &&
                 categories.map((category, i) => (
                   <option key={i} value={category.id}>
