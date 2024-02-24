@@ -5,6 +5,8 @@ import TopArticles from "../Components/top/TopArticles";
 import ExploreMore from "../Components/ExploreMore";
 import { createContext } from "react";
 import Head from "next/head";
+import IntroductionVideo from "../Components/intro/IntroductionVideo";
+import Partners from "../Components/partners/Partners";
 
 export const Context = createContext({
   BACKEND: "http://blogapi.thredex.eu",
@@ -48,6 +50,8 @@ export default function Index() {
             </Text>
           </HeaderContainer>
         </Header>
+        <IntroductionVideo />
+        <Partners />
         <TopArticles />
         <ExploreMore />
       </Context.Provider>

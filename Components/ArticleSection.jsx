@@ -10,6 +10,7 @@ import {
   convertFromHTML,
   convertToRaw,
 } from "draft-js";
+import {process} from "next/dist/server/web/sandbox/polyfills";
 const Section = styled.section`
   margin: 0 auto;
   width: 55%;
@@ -91,13 +92,16 @@ export default function ArticleSection({ articleData }) {
           <FrameChild>
             <p>{`${articleData.user_name} ${articleData.user_surname}`}</p>
             <FrameAuthorRole>{articleData.user_role}</FrameAuthorRole>
-            <FrameReadTime>{readTime} min read</FrameReadTime>
+            <FrameReadTime><time>{readTime}</time> min read</FrameReadTime>
           </FrameChild>
         </FrameContainer>
         {articleData.likes && <FrameLikes>{articleData.likes} {articleData.likes === 1 ? 'Like' : 'Likes'}</FrameLikes>}
         <HeaderContainer>
           <ArticleName>{articleData.article_name}</ArticleName>
           <Description>{articleData.article_description}</Description>
+          <audio controls>
+            <source src={`${process.env.NEXT_PUBLIC_BASE_URL}/audio.mp3`} type="audio/mp3" />
+          </audio>
         </HeaderContainer>
         <ArticleText>
           {state && <Editor editorState={state} readOnly />}
